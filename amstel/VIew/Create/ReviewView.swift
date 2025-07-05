@@ -22,7 +22,12 @@ struct ReviewView: View {
                     Text("You are sending \(amount.toSat()) satoshis to yourself")
                         .monospaced()
                 } else {
-                    Text("You are sending \(amount.toSat()) satoshis to \(viewModel.recipient!.description)")
+                    HStack {
+                        Text("You are sending \(amount.toSat()) satoshis to")
+                            .monospaced()
+                            .padding(.bottom)
+                        AddressFormattedView(address: viewModel.recipient!.description, columns: 4)
+                    }
                 }
                 
             } else {
@@ -30,8 +35,10 @@ struct ReviewView: View {
                     Text("You are consolidating into a single coin")
                         .monospaced()
                 } else {
-                    Text("You are sending all of your coins to \(viewModel.recipient!.description)")
+                    Text("You are sending all of your coins to")
                         .monospaced()
+                        .padding(.bottom)
+                    AddressFormattedView(address: viewModel.recipient!.description, columns: 4)
                 }
             }
         }

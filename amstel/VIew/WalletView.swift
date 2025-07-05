@@ -109,8 +109,8 @@ struct WalletView: View {
 //        .sheet(item: $activeFile) { file in
 //            Text("File")
 //        }
-        .popover(item: $currentRevealed, arrowEdge: .top) { revealed in
-            ReceiveView(address: revealed)
+        .sheet(item: $currentRevealed) { revealed in
+            ReceiveView(addressActual: $currentRevealed, viewableAddress: revealed.address)
         }
         .sheet(isPresented: $isCreatingTx) {
             CreateTransactionView(walletState: $walletState, isPresented: $isCreatingTx)

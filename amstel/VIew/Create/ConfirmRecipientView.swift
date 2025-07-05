@@ -22,8 +22,7 @@ struct ConfirmRecipientView: View {
                     .font(.headline)
                     .padding(.bottom, 4)
             }
-            Text("\(viewModel.recipient!.description)")
-                .monospaced()
+            AddressFormattedView(address: viewModel.recipient!.description, columns: 4)
         }
         .frame(width: 300, height: 100)
         .toolbar {
