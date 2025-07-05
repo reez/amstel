@@ -30,6 +30,17 @@ struct CoinListView: View {
                 // Middle
                 HStack {
                     Spacer()
+                    Text("\(coin.index)")
+                        .font(.caption2)
+                        .monospaced()
+                        .foregroundStyle(.secondary)
+                }
+                // End
+                HStack {
+                    Text(coin.date, style: .date)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                    Spacer()
                     if coin.change {
                         Text("Change")
                             .font(.caption2)
@@ -40,19 +51,24 @@ struct CoinListView: View {
                             .foregroundStyle(.green)
                     }
                 }
-                // End
-                HStack {
-                    Text("Index \(coin.index)")
-                        .font(.caption2)
-                        .monospaced()
-                        .foregroundStyle(.secondary)
-                    Spacer()
-                    Text(coin.date, style: .date)
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                }
             }
         }
     }
 }
 
+#Preview {
+    @Previewable @State var coins: [Coin] = [Coin(index: 34,
+                                                  txid: "aaaabbbbccccddddeeeeffffaaaabbbbccccddddeeeeffff",
+                                                  script: "0P_0 OP_PUSHDATA20",
+                                                  date: Date(),
+                                                  sats: 21404,
+                                                  change: false),
+                                             Coin(index: 34,
+                                                   txid: "aaaabbbbccccddddeeeeffffaaaabbbbccccddddeeeeffff",
+                                                   script: "0P_0 OP_PUSHDATA20",
+                                                   date: Date(),
+                                                   sats: 21404,
+                                                   change: false)
+    ]
+    CoinListView(coins: $coins)
+}

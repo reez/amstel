@@ -15,9 +15,6 @@ struct RecipientView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Start with a recipient")
-                .font(.headline)
-                .padding(.bottom, 4)
             HStack {
                 Button(action: {
                     do {
@@ -67,4 +64,10 @@ struct RecipientView: View {
             viewModel.recipient = try Address(address: addr, network: NETWORK)
         }
     }
+}
+
+#Preview {
+    @Previewable @State var state: WalletState = UninitializedWallet()
+    @Previewable @State var presented = true
+    RecipientView(viewModel: CreateTransactionViewModel(), walletState: $state, isPresented: $presented)
 }

@@ -31,9 +31,7 @@ enum WalletStateError: Error {
 final class UninitializedWallet: WalletState {
     func start() -> Void { return }
     func stop() -> Void { return } 
-    func balance() -> ViewableBalance {
-        return ViewableBalance(bitcoin: 0, sats: 0)
-    }
+    func balance() -> ViewableBalance { return ViewableBalance(bitcoin: 0, sats: 0) }
     func receive() throws -> ViewableAddress { throw WalletStateError.notReady }
     func completeTx(builder: TxBuilder) throws -> Psbt { throw WalletStateError.notReady }
     func coins() -> [Coin] { [] }

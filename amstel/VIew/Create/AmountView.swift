@@ -17,7 +17,6 @@ struct AmountView: View {
     @Binding var walletState: WalletState
     @Binding var isPresented: Bool
     
-    
     var body: some View {
         VStack(alignment: .leading) {
             Text("Choose your amount")

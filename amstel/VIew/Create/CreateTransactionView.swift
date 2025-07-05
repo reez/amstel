@@ -48,14 +48,6 @@ struct CreateTransactionView: View {
         }
     }
     
-    private func validateAddress(addr: String) -> Bool {
-        switch NETWORK {
-        case .bitcoin: addr.starts(with: "bcq1") || addr.starts(with: "bqtr")
-        case .signet: addr.starts(with: "tb")
-        default: false
-        }
-    }
-    
     private func getFees() async {
         let fees = await walletState.fees()
         if let fees = fees {

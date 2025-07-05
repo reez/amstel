@@ -22,15 +22,15 @@ struct TransactionListView: View {
                         .foregroundStyle(.secondary)
                         .monospaced()
                     Spacer()
-                    Label(tx.netSend ? "Sent" : "Received",
-                          systemImage: tx.netSend ? "arrow.up.right" : "arrow.down.left")
+                    Image(systemName: tx.netSend ? "arrow.up.right" : "arrow.down.left")
                         .foregroundColor(tx.netSend ? .red : .green)
                         .font(.subheadline)
                 }
                 // Middle
                 HStack {
-//                    Image(systemName: "clock")
-//                        .foregroundStyle(.secondary)
+                    Text(tx.metadata.date, style: .date)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
                     Spacer()
                     Text("\(tx.amount) sats")
                         .monospaced()
@@ -42,11 +42,22 @@ struct TransactionListView: View {
                         .font(.caption2)
                         .foregroundStyle(.secondary)
                     Spacer()
-                    Text(tx.metadata.date, style: .date)
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
                 }
             }
         }
     }
+}
+
+#Preview {
+    @Previewable @State var transaction: [ViewableTransaction] = [
+        ViewableTransaction(netSend: false,
+                            amount: 4200,
+                            metadata: TxMetadata(txid: "aaaabbbbccccddddeeeeffffaaaabbbbccccddddeeeeffff", date: Date(), height: 402)
+                           ),
+        ViewableTransaction(netSend: true,
+                            amount: 3948,
+                            metadata: TxMetadata(txid: "aaaabbbbccccddddeeeeffffaaaabbbbccccddddeeeeffff", date: Date(), height: 3483)
+                           )
+    ]
+    TransactionListView(transactions: $transaction)
 }
