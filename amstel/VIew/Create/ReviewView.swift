@@ -16,6 +16,7 @@ struct ReviewView: View {
         VStack(alignment: .leading, spacing: 4) {
             Text("Confirm your transaction")
                 .font(.headline)
+                .padding(.bottom, 4)
             if let amount = viewModel.value {
                 if viewModel.isConsoldating {
                     Text("You are sending \(amount.toSat()) satoshis to yourself")
@@ -34,7 +35,7 @@ struct ReviewView: View {
                 }
             }
         }
-        .frame(width: 300, height: 200)
+        .frame(width: 300, height: 100)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Save") {

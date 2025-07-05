@@ -34,7 +34,7 @@ struct CreateTransactionView: View {
                 ReviewView(viewModel: viewModel, walletState: $walletState, isPresented: $isPresented)
             }
         }
-        .frame(width: 400, height: 200)
+        .frame(width: 400, height: 150)
         .task {
             await getFees()
         }

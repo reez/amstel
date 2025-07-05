@@ -19,12 +19,13 @@ struct AmountView: View {
     
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading) {
             Text("Choose your amount")
                 .font(.headline)
             Text("You have \(walletState.balance().sats) satoshis available")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
+                .padding(.bottom, 4)
             HStack {
                 Picker("Denomination", selection: $viewModel.usingDenom) {
                     Text("Satoshis").tag(Denomination.sat)
@@ -44,7 +45,7 @@ struct AmountView: View {
                     }
             }
         }
-        .frame(width: 300, height: 200)
+        .frame(width: 300, height: 100)
         .toolbar {
             ToolbarItem {
                 Button("Max") {

@@ -16,14 +16,16 @@ struct ConfirmRecipientView: View {
             if viewModel.isConsoldating {
                 Text("Combining coins")
                     .font(.headline)
+                    .padding(.bottom, 4)
             } else {
                 Text("Confirm your destination")
                     .font(.headline)
+                    .padding(.bottom, 4)
             }
             Text("\(viewModel.recipient!.description)")
                 .monospaced()
         }
-        .frame(width: 300, height: 200)
+        .frame(width: 300, height: 100)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Confirm") {

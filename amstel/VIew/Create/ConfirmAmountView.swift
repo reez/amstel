@@ -17,16 +17,21 @@ struct ConfirmAmountView: View {
                 Text("Send all your coins")
                     .font(.headline)
                     .fontWeight(.bold)
+            } else if viewModel.drainingWallet {
+                Text("Combine all coins")
+                    .font(.headline)
+                    .fontWeight(.bold)
             } else {
                 Text("Confirm the amount")
                     .font(.headline)
+                    .padding(.bottom, 4)
             }
             if let amount = viewModel.value {
                 Text("\(amount.toSat()) satoshis")
                     .monospaced()
             }
         }
-        .frame(width: 300, height: 200)
+        .frame(width: 300, height: 100)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Confirm") {

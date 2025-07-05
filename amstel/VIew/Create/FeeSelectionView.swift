@@ -47,7 +47,7 @@ struct FeeSelectionView: View {
             }
             Spacer()
         }
-        .frame(width: 300, height: 200)
+        .frame(width: 300, height: 100)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Review") {

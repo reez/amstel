@@ -17,6 +17,7 @@ struct RecipientView: View {
         VStack(alignment: .leading, spacing: 4) {
             Text("Start with a recipient")
                 .font(.headline)
+                .padding(.bottom, 4)
             HStack {
                 Button(action: {
                     do {
@@ -43,7 +44,7 @@ struct RecipientView: View {
                 }
             }
         }
-        .frame(width: 300, height: 200)
+        .frame(width: 300, height: 100)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Next") {
