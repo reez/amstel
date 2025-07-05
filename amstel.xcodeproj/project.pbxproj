@@ -1,0 +1,633 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AD8475652E1541D000F813DB /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = AD8475642E1541D000F813DB /* KeychainAccess */; };
+		AD8475682E1541E900F813DB /* BitcoinDevKit in Frameworks */ = {isa = PBXBuildFile; productRef = AD8475672E1541E900F813DB /* BitcoinDevKit */; };
+		AD8475802E157F6B00F813DB /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = AD84757F2E157F6B00F813DB /* QRCode */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AD84753F2E153AC900F813DB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD8475262E153AC800F813DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD84752D2E153AC800F813DB;
+			remoteInfo = amstel;
+		};
+		AD8475492E153AC900F813DB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD8475262E153AC800F813DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD84752D2E153AC800F813DB;
+			remoteInfo = amstel;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AD84752E2E153AC800F813DB /* amstel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = amstel.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD84753E2E153AC900F813DB /* amstelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = amstelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD8475482E153AC900F813DB /* amstelUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = amstelUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		AD0C1F722E16D286002D6BA8 /* Exceptions for "amstel" folder in "amstel" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = AD84752D2E153AC800F813DB /* amstel */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		AD8475302E153AC800F813DB /* amstel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				AD0C1F722E16D286002D6BA8 /* Exceptions for "amstel" folder in "amstel" target */,
+			);
+			path = amstel;
+			sourceTree = "<group>";
+		};
+		AD8475412E153AC900F813DB /* amstelTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = amstelTests;
+			sourceTree = "<group>";
+		};
+		AD84754B2E153AC900F813DB /* amstelUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = amstelUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AD84752B2E153AC800F813DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD8475682E1541E900F813DB /* BitcoinDevKit in Frameworks */,
+				AD8475652E1541D000F813DB /* KeychainAccess in Frameworks */,
+				AD8475802E157F6B00F813DB /* QRCode in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD84753B2E153AC900F813DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD8475452E153AC900F813DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AD8475252E153AC800F813DB = {
+			isa = PBXGroup;
+			children = (
+				AD8475302E153AC800F813DB /* amstel */,
+				AD8475412E153AC900F813DB /* amstelTests */,
+				AD84754B2E153AC900F813DB /* amstelUITests */,
+				AD84752F2E153AC800F813DB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		AD84752F2E153AC800F813DB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD84752E2E153AC800F813DB /* amstel.app */,
+				AD84753E2E153AC900F813DB /* amstelTests.xctest */,
+				AD8475482E153AC900F813DB /* amstelUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		AD84752D2E153AC800F813DB /* amstel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD8475522E153AC900F813DB /* Build configuration list for PBXNativeTarget "amstel" */;
+			buildPhases = (
+				AD84752A2E153AC800F813DB /* Sources */,
+				AD84752B2E153AC800F813DB /* Frameworks */,
+				AD84752C2E153AC800F813DB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				AD8475302E153AC800F813DB /* amstel */,
+			);
+			name = amstel;
+			packageProductDependencies = (
+				AD8475642E1541D000F813DB /* KeychainAccess */,
+				AD8475672E1541E900F813DB /* BitcoinDevKit */,
+				AD84757F2E157F6B00F813DB /* QRCode */,
+			);
+			productName = amstel;
+			productReference = AD84752E2E153AC800F813DB /* amstel.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AD84753D2E153AC900F813DB /* amstelTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD8475552E153AC900F813DB /* Build configuration list for PBXNativeTarget "amstelTests" */;
+			buildPhases = (
+				AD84753A2E153AC900F813DB /* Sources */,
+				AD84753B2E153AC900F813DB /* Frameworks */,
+				AD84753C2E153AC900F813DB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AD8475402E153AC900F813DB /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				AD8475412E153AC900F813DB /* amstelTests */,
+			);
+			name = amstelTests;
+			packageProductDependencies = (
+			);
+			productName = amstelTests;
+			productReference = AD84753E2E153AC900F813DB /* amstelTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		AD8475472E153AC900F813DB /* amstelUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD8475582E153AC900F813DB /* Build configuration list for PBXNativeTarget "amstelUITests" */;
+			buildPhases = (
+				AD8475442E153AC900F813DB /* Sources */,
+				AD8475452E153AC900F813DB /* Frameworks */,
+				AD8475462E153AC900F813DB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AD84754A2E153AC900F813DB /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				AD84754B2E153AC900F813DB /* amstelUITests */,
+			);
+			name = amstelUITests;
+			packageProductDependencies = (
+			);
+			productName = amstelUITests;
+			productReference = AD8475482E153AC900F813DB /* amstelUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AD8475262E153AC800F813DB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1630;
+				LastUpgradeCheck = 1630;
+				TargetAttributes = {
+					AD84752D2E153AC800F813DB = {
+						CreatedOnToolsVersion = 16.3;
+					};
+					AD84753D2E153AC900F813DB = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = AD84752D2E153AC800F813DB;
+					};
+					AD8475472E153AC900F813DB = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = AD84752D2E153AC800F813DB;
+					};
+				};
+			};
+			buildConfigurationList = AD8475292E153AC800F813DB /* Build configuration list for PBXProject "amstel" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = AD8475252E153AC800F813DB;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				AD8475632E1541D000F813DB /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				AD8475662E1541E900F813DB /* XCLocalSwiftPackageReference "../bdk-ffi/bdk-swift" */,
+				AD84757E2E157F6B00F813DB /* XCRemoteSwiftPackageReference "QRCode" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = AD84752F2E153AC800F813DB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AD84752D2E153AC800F813DB /* amstel */,
+				AD84753D2E153AC900F813DB /* amstelTests */,
+				AD8475472E153AC900F813DB /* amstelUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AD84752C2E153AC800F813DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD84753C2E153AC900F813DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD8475462E153AC900F813DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AD84752A2E153AC800F813DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD84753A2E153AC900F813DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD8475442E153AC900F813DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AD8475402E153AC900F813DB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD84752D2E153AC800F813DB /* amstel */;
+			targetProxy = AD84753F2E153AC900F813DB /* PBXContainerItemProxy */;
+		};
+		AD84754A2E153AC900F813DB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD84752D2E153AC800F813DB /* amstel */;
+			targetProxy = AD8475492E153AC900F813DB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		AD8475502E153AC900F813DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 3JKKZ74574;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		AD8475512E153AC900F813DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 3JKKZ74574;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		AD8475532E153AC900F813DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = amstel/amstel.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3JKKZ74574;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = amstel/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.robertnetzke.amstel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		AD8475542E153AC900F813DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = amstel/amstel.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3JKKZ74574;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = amstel/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.robertnetzke.amstel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		AD8475562E153AC900F813DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3JKKZ74574;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.robertnetzke.amstelTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/amstel.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/amstel";
+			};
+			name = Debug;
+		};
+		AD8475572E153AC900F813DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3JKKZ74574;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.robertnetzke.amstelTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/amstel.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/amstel";
+			};
+			name = Release;
+		};
+		AD8475592E153AC900F813DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3JKKZ74574;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.robertnetzke.amstelUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = amstel;
+			};
+			name = Debug;
+		};
+		AD84755A2E153AC900F813DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3JKKZ74574;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.robertnetzke.amstelUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = amstel;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AD8475292E153AC800F813DB /* Build configuration list for PBXProject "amstel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD8475502E153AC900F813DB /* Debug */,
+				AD8475512E153AC900F813DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD8475522E153AC900F813DB /* Build configuration list for PBXNativeTarget "amstel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD8475532E153AC900F813DB /* Debug */,
+				AD8475542E153AC900F813DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD8475552E153AC900F813DB /* Build configuration list for PBXNativeTarget "amstelTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD8475562E153AC900F813DB /* Debug */,
+				AD8475572E153AC900F813DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD8475582E153AC900F813DB /* Build configuration list for PBXNativeTarget "amstelUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD8475592E153AC900F813DB /* Debug */,
+				AD84755A2E153AC900F813DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		AD8475662E1541E900F813DB /* XCLocalSwiftPackageReference "../bdk-ffi/bdk-swift" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../bdk-ffi/bdk-swift";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AD8475632E1541D000F813DB /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		AD84757E2E157F6B00F813DB /* XCRemoteSwiftPackageReference "QRCode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dagronf/QRCode.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 26.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AD8475642E1541D000F813DB /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AD8475632E1541D000F813DB /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		AD8475672E1541E900F813DB /* BitcoinDevKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BitcoinDevKit;
+		};
+		AD84757F2E157F6B00F813DB /* QRCode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AD84757E2E157F6B00F813DB /* XCRemoteSwiftPackageReference "QRCode" */;
+			productName = QRCode;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = AD8475262E153AC800F813DB /* Project object */;
+}
