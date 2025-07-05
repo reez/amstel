@@ -26,7 +26,9 @@ struct amstelApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .navigationTitle("")
         }
+//        .windowStyle(.hiddenTitleBar)
         .modelContainer(sharedModelContainer)
     }
 }

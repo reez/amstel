@@ -81,6 +81,7 @@ struct WalletView: View {
         }
         .toolbar {
             ToolbarItemGroup {
+                Spacer()
                 Button(action: {
                     isCreatingTx = true
                 }) {
