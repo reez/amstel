@@ -67,6 +67,14 @@ extension String {
     }
 }
 
+extension URL {
+    static func nodeDirectoryPath() -> URL {
+        let documentsDir = URL.documentsDirectory
+        let nodeDir = documentsDir.appendingPathComponent(".node")
+        return nodeDir
+    }
+}
+
 extension Wallet {
     convenience init(recvId: String, recv: String, change: String) throws {
         let docsDir = URL.documentsDirectory

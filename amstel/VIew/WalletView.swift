@@ -20,7 +20,6 @@ struct WalletView: View {
     @AppStorage("numConns") private var numConns: Int = 3
     
     @State private var walletState: WalletState = UninitializedWallet()
-    // @StateObject var transactions: TransactionViewModel
     // UI
     @State private var tab: Tab = .coins
     @State private var isInitialLoad = true
@@ -175,9 +174,12 @@ struct WalletView: View {
         } else {
             ScanType.sync
         }
+        if !FileManager.default.fileExists(atPath: URL.nodeDirectoryPath().path()) {
+            try FileManager.default.createDirectory(at: URL.nodeDirectoryPath(), withIntermediateDirectories: false)
+        }
         let conns = UInt8(numConns)
         let cbf = try CbfBuilder()
-            .dataDir(dataDir: String.walletDirectoryPath(id: backup.recvId))
+            .dataDir(dataDir: URL.nodeDirectoryPath().path())
             .scanType(scanType: scanType)
             .connections(connections: conns)
             .peers(peers: [PEER_1, PEER_2, PEER_3])
@@ -185,7 +187,6 @@ struct WalletView: View {
         walletState = InitializedWallet(wallet: wallet, client: cbf.client, node: cbf.node, persister: conn)
         self.balance = self.walletState.balance()
         self.transactions = self.walletState.transactions()
-        // self.transactions.setTransactions(self.walletState.transactions())
         self.coins = self.walletState.coins()
         walletState.start()
     }
