@@ -15,12 +15,9 @@ struct TransactionListView: View {
             VStack(alignment: .leading, spacing: 4) {
                 // Top
                 HStack {
-                    Text("TXID: \(tx.metadata.txid)")
-                        .font(.subheadline)
-                        .lineLimit(1)
-                        .truncationMode(.middle)
+                    Text(tx.metadata.date, style: .date)
+                        .font(.caption2)
                         .foregroundStyle(.secondary)
-                        .monospaced()
                     Spacer()
                     Image(systemName: tx.netSend ? "arrow.up.right" : "arrow.down.left")
                         .foregroundColor(tx.netSend ? .red : .green)
@@ -28,9 +25,6 @@ struct TransactionListView: View {
                 }
                 // Middle
                 HStack {
-                    Text(tx.metadata.date, style: .date)
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
                     Spacer()
                     Text("\(tx.amount) sats")
                         .monospaced()

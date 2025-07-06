@@ -16,12 +16,9 @@ struct CoinListView: View {
             VStack(alignment: .leading, spacing: 4) {
                 // Top
                 HStack {
-                    Text("TXID: \(coin.txid)")
-                        .font(.subheadline)
-                        .lineLimit(1)
-                        .truncationMode(.middle)
+                    Text(coin.date, style: .date)
+                        .font(.caption2)
                         .foregroundStyle(.secondary)
-                        .monospaced()
                     Spacer()
                     Text("\(coin.sats) sats")
                         .font(.subheadline)
@@ -30,25 +27,21 @@ struct CoinListView: View {
                 // Middle
                 HStack {
                     Spacer()
-                    Text("\(coin.index)")
+                    Text("\(coin.change ? 1 : 0)/\(coin.index)")
                         .font(.caption2)
                         .monospaced()
                         .foregroundStyle(.secondary)
                 }
                 // End
                 HStack {
-                    Text(coin.date, style: .date)
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
-                    Spacer()
                     if coin.change {
                         Text("Change")
                             .font(.caption2)
-                            .foregroundStyle(.green)
+                            .foregroundStyle(.secondary)
                     } else {
                         Text("Received")
                             .font(.caption2)
-                            .foregroundStyle(.green)
+                            .foregroundStyle(.primary)
                     }
                 }
             }
@@ -68,7 +61,7 @@ struct CoinListView: View {
                                                    script: "0P_0 OP_PUSHDATA20",
                                                    date: Date(),
                                                    sats: 21404,
-                                                   change: false)
+                                                   change: true)
     ]
     CoinListView(coins: $coins)
 }

@@ -21,7 +21,7 @@ struct WalletView: View {
     
     @State private var walletState: WalletState = UninitializedWallet()
     // UI
-    @State private var tab: Tab = .coins
+    @State private var tab: Tab = .transactions
     @State private var isInitialLoad = true
     @State private var isCreatingTx = false
     @State private var didError = false
