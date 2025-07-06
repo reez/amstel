@@ -19,8 +19,6 @@ struct AmountView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Choose your amount")
-                .font(.headline)
             Text("You have \(walletState.balance().sats) satoshis available")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
@@ -44,7 +42,7 @@ struct AmountView: View {
                     }
             }
         }
-        .frame(width: 300, height: 100)
+        .frame(width: 300, height: 200)
         .toolbar {
             ToolbarItem {
                 Button("Max") {
@@ -77,4 +75,10 @@ struct AmountView: View {
             viewModel.value = Amount.fromSat(satoshi: sat)
         }
     }
+}
+
+#Preview {
+    @Previewable @State var walletState: WalletState = MockWallet()
+    @Previewable @State var isPresented: Bool = true
+    AmountView(viewModel: CreateTransactionViewModel(), amountString: "320432", walletState: $walletState, isPresented: $isPresented)
 }

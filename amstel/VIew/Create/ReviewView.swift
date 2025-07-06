@@ -14,19 +14,16 @@ struct ReviewView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Confirm your transaction")
-                .font(.headline)
-                .padding(.bottom, 4)
             if let amount = viewModel.value {
                 if viewModel.isConsoldating {
                     Text("You are sending \(amount.toSat()) satoshis to yourself")
                         .monospaced()
                 } else {
-                    HStack {
+                    VStack {
                         Text("You are sending \(amount.toSat()) satoshis to")
                             .monospaced()
-                            .padding(.bottom)
                         AddressFormattedView(address: viewModel.recipient!.description, columns: 4)
+                            .padding()
                     }
                 }
                 
@@ -42,7 +39,7 @@ struct ReviewView: View {
                 }
             }
         }
-        .frame(width: 300, height: 100)
+        .frame(width: 300, height: 200)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Save") {
@@ -60,9 +57,11 @@ struct ReviewView: View {
                                 createTx = createTx.addRecipient(script: viewModel.recipient!.scriptPubkey(), amount: viewModel.value!)
                             }
                             do {
-                                try buildAndSaveTx(builder: createTx, dirName: dirName, filename: filename)
+                                let filepath = dirName.appendingPathComponent(filename).path()
+                                try buildAndSaveTx(builder: createTx, filepath: filepath)
                                 isPresented = false
-                            } catch {
+                            } catch let e {
+                                print("\(e)")
                                 isPresented = false
                             }
                         } else {
@@ -90,11 +89,15 @@ struct ReviewView: View {
         }
     }
     
-    private func buildAndSaveTx(builder: TxBuilder, dirName: URL, filename: String) throws {
-        var fileURL = dirName.appendingPathComponent(filename)
+    private func buildAndSaveTx(builder: TxBuilder, filepath: String) throws {
         let psbt = try walletState.completeTx(builder: builder)
-        let encoded = psbt.serialize()
-        // try encoded.write(to: &fileURL)
+        try psbt.writeToFile(path: filepath)
         return
     }
+}
+
+#Preview {
+    @Previewable @State var walletState: WalletState = MockWallet()
+    @Previewable @State var isPresented: Bool = true
+    ReviewView(viewModel: CreateTransactionViewModel(), walletState: $walletState, isPresented: $isPresented)
 }

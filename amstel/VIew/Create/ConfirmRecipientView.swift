@@ -18,13 +18,10 @@ struct ConfirmRecipientView: View {
                     .font(.headline)
                     .padding(.bottom, 4)
             } else {
-                Text("Confirm your destination")
-                    .font(.headline)
-                    .padding(.bottom, 4)
+                AddressFormattedView(address: viewModel.recipient!.description, columns: 4)
             }
-            AddressFormattedView(address: viewModel.recipient!.description, columns: 4)
         }
-        .frame(width: 300, height: 100)
+        .frame(width: 300, height: 200)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Confirm") {
@@ -33,4 +30,8 @@ struct ConfirmRecipientView: View {
             }
         }
     }
+}
+
+#Preview {
+    ConfirmRecipientView(viewModel: CreateTransactionViewModel())
 }

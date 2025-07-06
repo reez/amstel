@@ -21,17 +21,13 @@ struct ConfirmAmountView: View {
                 Text("Combine all coins")
                     .font(.headline)
                     .fontWeight(.bold)
-            } else {
-                Text("Confirm the amount")
-                    .font(.headline)
-                    .padding(.bottom, 4)
             }
             if let amount = viewModel.value {
                 Text("\(amount.toSat()) satoshis")
                     .monospaced()
             }
         }
-        .frame(width: 300, height: 100)
+        .frame(width: 300, height: 200)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Confirm") {
@@ -40,4 +36,9 @@ struct ConfirmAmountView: View {
             }
         }
     }
+}
+
+#Preview {
+    var viewModel = CreateTransactionViewModel()
+    ConfirmAmountView(viewModel: viewModel)
 }

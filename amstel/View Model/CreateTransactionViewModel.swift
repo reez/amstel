@@ -7,8 +7,33 @@
 import SwiftUI
 import BitcoinDevKit
 
-enum Step {
+enum Step: CaseIterable {
     case recipient, confirmRecipient, amount, confirmAmount, fee, review
+    
+    var index: Int {
+        return Step.allCases.firstIndex(of: self) ?? 0
+    }
+
+    static var totalSteps: Int {
+        return Step.allCases.count
+    }
+    
+    var title: String {
+        switch self {
+        case .recipient:
+            return "Add Recipient"
+        case .confirmRecipient:
+            return "Confirm Recipient"
+        case .amount:
+            return "Enter Amount"
+        case .confirmAmount:
+            return "Confirm Amount"
+        case .fee:
+            return "Set Fee"
+        case .review:
+            return "Review Transaction"
+        }
+    }
 }
 
 enum Denomination {

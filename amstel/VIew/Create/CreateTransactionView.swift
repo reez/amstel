@@ -18,23 +18,34 @@ struct CreateTransactionView: View {
     @Binding var isPresented: Bool
     
     var body: some View {
-        VStack {
-            switch viewModel.step {
-            case .recipient:
-                RecipientView(viewModel: viewModel, walletState: $walletState, isPresented: $isPresented)
-            case .confirmRecipient:
-                ConfirmRecipientView(viewModel: viewModel)
-            case .amount:
-                AmountView(viewModel: viewModel, walletState: $walletState, isPresented: $isPresented)
-            case .confirmAmount:
-                ConfirmAmountView(viewModel: viewModel)
-            case .fee:
-                FeeSelectionView(viewModel: viewModel, walletState: $walletState, isPresented: $isPresented)
-            case .review:
-                ReviewView(viewModel: viewModel, walletState: $walletState, isPresented: $isPresented)
+        VStack(alignment: .leading) {
+            Text("\(viewModel.step.title)")
+                .font(.headline)
+            ProgressView(
+                         value: Double(viewModel.step.index + 1),
+                         total: Double(Step.totalSteps)
+            )
+            .labelsHidden()
+            HStack {
+                Spacer()
+                switch viewModel.step {
+                case .recipient:
+                    RecipientView(viewModel: viewModel, walletState: $walletState, isPresented: $isPresented)
+                case .confirmRecipient:
+                    ConfirmRecipientView(viewModel: viewModel)
+                case .amount:
+                    AmountView(viewModel: viewModel, walletState: $walletState, isPresented: $isPresented)
+                case .confirmAmount:
+                    ConfirmAmountView(viewModel: viewModel)
+                case .fee:
+                    FeeSelectionView(viewModel: viewModel, walletState: $walletState, isPresented: $isPresented)
+                case .review:
+                    ReviewView(viewModel: viewModel, walletState: $walletState, isPresented: $isPresented)
+                }
+                Spacer()
             }
         }
-        .frame(width: 400, height: 150)
+        .frame(width: 400, height: 250)
         .task {
             await getFees()
         }
@@ -55,4 +66,10 @@ struct CreateTransactionView: View {
         }
         viewModel.isFetchingFees = false
     }
+}
+
+#Preview {
+    @Previewable @State var walletState: WalletState = MockWallet()
+    @Previewable @State var isPresented: Bool = true
+    CreateTransactionView(viewModel: CreateTransactionViewModel(), walletState: $walletState, isPresented: $isPresented)
 }

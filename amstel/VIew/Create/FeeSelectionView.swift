@@ -14,10 +14,8 @@ struct FeeSelectionView: View {
     @State var satPerVb: UInt64 = 1
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(spacing: 4) {
             Spacer()
-            Text("Select a fee")
-                .font(.headline)
             if let expectedFeeRates = viewModel.expectedFeeRates {
                 VStack(alignment: .leading) {
                     HStack {
@@ -47,7 +45,7 @@ struct FeeSelectionView: View {
             }
             Spacer()
         }
-        .frame(width: 300, height: 100)
+        .frame(width: 300, height: 200)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Review") {
@@ -56,4 +54,10 @@ struct FeeSelectionView: View {
             }
         }
     }
+}
+
+#Preview {
+    @Previewable @State var walletState: WalletState = MockWallet()
+    @Previewable @State var isPresented: Bool = true
+    FeeSelectionView(viewModel: CreateTransactionViewModel(), walletState: $walletState, isPresented: $isPresented)
 }

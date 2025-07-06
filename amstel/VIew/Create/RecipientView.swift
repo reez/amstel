@@ -15,6 +15,10 @@ struct RecipientView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
+            Spacer()
+            Text("Welcome to the transaction builder. Please start by adding a recipient. Once you have reviewed your transaction details, a PSBT file will be saved in the folder you select.")
+                .font(.subheadline)
+            Spacer()
             HStack {
                 Button(action: {
                     do {
@@ -40,8 +44,9 @@ struct RecipientView: View {
                     Label("Consolidate", systemImage: "bitcoinsign.arrow.trianglehead.counterclockwise.rotate.90")
                 }
             }
+            Spacer()
         }
-        .frame(width: 300, height: 100)
+        .frame(width: 300, height: 200)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Next") {
