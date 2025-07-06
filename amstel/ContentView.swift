@@ -98,6 +98,14 @@ struct ContentView: View {
     }
 
     private func deleteItems(offsets: IndexSet) {
+        for index in offsets {
+            let item = items[index]
+            let dirId = item.recvKeychainId
+            let dirName = String.walletDirectoryPath(id: dirId)
+            if FileManager.default.fileExists(atPath: dirName) {
+                let _ = try? FileManager.default.removeItem(atPath: dirName)
+            }
+        }
         withAnimation {
             for index in offsets {
                 modelContext.delete(items[index])
