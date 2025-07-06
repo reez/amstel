@@ -49,7 +49,8 @@ extension AddressInfo {
     func intoViewable() -> ViewableAddress {
         let address = self.address.description
         let index = self.index
-        return ViewableAddress(address: address, index: index)
+        let uri = self.address.toQrUri()
+        return ViewableAddress(address: address, uri: uri, index: index)
     }
 }
 

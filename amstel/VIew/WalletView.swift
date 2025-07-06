@@ -110,7 +110,7 @@ struct WalletView: View {
 //            Text("File")
 //        }
         .sheet(item: $currentRevealed) { revealed in
-            ReceiveView(addressActual: $currentRevealed, viewableAddress: revealed.address)
+            ReceiveView(addressActual: $currentRevealed, viewableAddress: revealed.address, uri: revealed.uri)
         }
         .sheet(isPresented: $isCreatingTx) {
             CreateTransactionView(walletState: $walletState, isPresented: $isCreatingTx)

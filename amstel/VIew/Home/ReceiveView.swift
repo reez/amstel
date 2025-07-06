@@ -10,11 +10,12 @@ import QRCode
 struct ReceiveView: View {
     @Binding var addressActual: ViewableAddress?
     let viewableAddress: String
+    let uri: String
 
     var body: some View {
         VStack {
             // Don't add padding
-            QRCodeViewUI(content: viewableAddress,
+            QRCodeViewUI(content: uri,
                          onPixelShape: .curvePixel(),
                          eyeStyle: QRCode.EyeShape.RoundedRect(cornerRadiusFraction: 0.9) as? QRCodeFillStyleGenerator
             )
@@ -42,6 +43,10 @@ struct ReceiveView: View {
 }
 
 #Preview {
-    @Previewable @State var addressActual: ViewableAddress? = ViewableAddress(address:"bc1qexampleaddress1234567890", index: 0)
-    ReceiveView(addressActual: $addressActual, viewableAddress: "bc1qexampleaddress1234567890")
+    @Previewable @State var addressActual: ViewableAddress? = ViewableAddress(
+        address:"bc1qexampleaddress1234567890",
+        uri: "bitcoin:bc1qexampleaddress1234567890",
+        index: 0
+    )
+    ReceiveView(addressActual: $addressActual, viewableAddress: "bc1qexampleaddress1234567890", uri: "bitcoin:bc1qexampleaddress1234567890")
 }
