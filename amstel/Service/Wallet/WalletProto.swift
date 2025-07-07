@@ -80,9 +80,11 @@ final class MockWallet: WalletState {
     func transactions() -> [ViewableTransaction] {
         [ViewableTransaction(netSend: false,
                amount: 4200,
+               feeRate: nil,
                metadata: TxMetadata(txid: "aaaabbbbccccddddeeeeffffaaaabbbbccccddddeeeeffff", date: Date(), height: 402)),
            ViewableTransaction(netSend: true,
                amount: 3948,
+               feeRate: nil,
                metadata: TxMetadata(txid: "aaaabbbbccccddddeeeeffffaaaabbbbccccddddeeeeffff", date: Date(), height: 3483))
        ]
     }

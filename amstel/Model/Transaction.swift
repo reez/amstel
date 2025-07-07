@@ -10,6 +10,7 @@ struct ViewableTransaction: Equatable, Identifiable, Hashable {
     let id: UUID = UUID()
     let netSend: Bool
     let amount: UInt64
+    let feeRate: UInt64?
     let metadata: TxMetadata
 }
 

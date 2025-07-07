@@ -36,6 +36,12 @@ struct TransactionListView: View {
                         .font(.caption2)
                         .foregroundStyle(.secondary)
                     Spacer()
+                    if let feeRate = tx.feeRate {
+                        Text("\(feeRate) sat/vB")
+                            .font(.caption2)
+                            .monospaced()
+                            .foregroundStyle(.secondary)
+                    }
                 }
             }
         }
@@ -46,10 +52,12 @@ struct TransactionListView: View {
     @Previewable @State var transaction: [ViewableTransaction] = [
         ViewableTransaction(netSend: false,
                             amount: 4200,
+                            feeRate: nil,
                             metadata: TxMetadata(txid: "aaaabbbbccccddddeeeeffffaaaabbbbccccddddeeeeffff", date: Date(), height: 402)
                            ),
         ViewableTransaction(netSend: true,
                             amount: 3948,
+                            feeRate: 1,
                             metadata: TxMetadata(txid: "aaaabbbbccccddddeeeeffffaaaabbbbccccddddeeeeffff", date: Date(), height: 3483)
                            )
     ]

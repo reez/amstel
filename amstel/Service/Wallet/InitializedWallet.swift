@@ -47,7 +47,7 @@ final class InitializedWallet: WalletState {
         var vals: [ViewableTransaction] = []
         for tx in txs {
             let metadata = tx.intoMetadata()
-            let _feeRate = try? self.wallet.calculateFeeRate(tx: tx.transaction)
+            let feeRate = try? self.wallet.calculateFeeRate(tx: tx.transaction)
             let sentAndReceived = self.wallet.sentAndReceived(tx: tx.transaction)
             let netSend = sentAndReceived.sent.toSat() > sentAndReceived.received.toSat()
             let amount = if netSend {
@@ -55,7 +55,7 @@ final class InitializedWallet: WalletState {
             } else {
                 sentAndReceived.received.toSat() - sentAndReceived.sent.toSat()
             }
-            let nextViewable = ViewableTransaction(netSend: netSend, amount: amount, metadata: metadata)
+            let nextViewable = ViewableTransaction(netSend: netSend, amount: amount, feeRate: feeRate?.toSatPerVbCeil(), metadata: metadata)
             vals.append(nextViewable)
         }
         return vals

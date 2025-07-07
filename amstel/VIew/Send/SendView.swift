@@ -42,14 +42,11 @@ struct SendView: View {
                 }
             }
             ToolbarItem(placement: .confirmationAction) {
-                if waitingForBroadcast {
-                    ProgressView()
-                } else {
-                    Button("Send") {
-                        waitingForBroadcast = true
-                        sendTx()
-                    }
+                Button("Send") {
+                    waitingForBroadcast = true
+                    sendTx()
                 }
+                .disabled(waitingForBroadcast)
             }
         }
         .onAppear {
