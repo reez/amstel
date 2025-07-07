@@ -25,6 +25,7 @@ struct WalletView: View {
     @State private var isInitialLoad = true
     @State private var isCreatingTx = false
     @State private var errorMessage: ErrorMessage? = nil
+    @State private var firstSync = false
     // Node attributes
     @State private var isConnected = false
     @State private var blockHeight: UInt32 = 0
@@ -119,6 +120,10 @@ struct WalletView: View {
         .sheet(item: $errorMessage) { message in
             ErrorView(message: $errorMessage, messageReadable: message.message)
         }
+        .popover(isPresented: $firstSync) {
+            Text("The first sync for a new import will take a while, anywhere between 10 minutes and an hour. Subsequent sync times will be much faster. Please leave the application open.")
+                .padding()
+        }
         // Handle notifications from the node
         .onReceive(NotificationCenter.default.publisher(for: .progressDidUpdate)) { notification in
             self.blockHeight = self.walletState.height()
@@ -128,6 +133,7 @@ struct WalletView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: .walletDidUpdate)) { notification in
             self.isInitialSync = false
+            self.firstSync = false
             self.blockHeight = self.walletState.height()
             self.isConnected = self.walletState.connected()
             self.dead = !self.walletState.isRunning()
@@ -183,7 +189,11 @@ struct WalletView: View {
         let recv = try Descriptor(descriptor: backup.recv, network: NETWORK)
         let change = try Descriptor(descriptor: backup.change, network: NETWORK)
         let wallet = try Wallet.load(descriptor: recv, changeDescriptor: change, persister: conn)
-        let scanType = if wallet.latestCheckpoint().height == 0 {
+        let isRecovering = wallet.latestCheckpoint().height == 0
+        if isRecovering {
+            self.firstSync = true
+        }
+        let scanType = if isRecovering {
             ScanType.recovery(fromHeight: RECOVERY_HEIGHT)
         } else {
             ScanType.sync
