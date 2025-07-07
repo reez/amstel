@@ -38,6 +38,10 @@ final class InitializedWallet: WalletState {
         return addressInfo.intoViewable()
     }
     
+    func isMine(_ script: Script) -> Bool {
+        wallet.isMine(script: script)
+    }
+    
     func transactions() -> [ViewableTransaction] {
         let txs = self.wallet.transactions()
         var vals: [ViewableTransaction] = []

@@ -17,6 +17,7 @@ protocol WalletState {
     func transactions() -> [ViewableTransaction]
     func receive() throws -> ViewableAddress
     func completeTx(builder: TxBuilder) throws -> Psbt
+    func isMine(_ script: Script) -> Bool
     // Node metrics
     func connected() -> Bool
     func fees() async -> FeeRates?
@@ -35,6 +36,7 @@ final class UninitializedWallet: WalletState {
     func balance() -> ViewableBalance { return ViewableBalance(bitcoin: 0, sats: 0) }
     func receive() throws -> ViewableAddress { throw WalletStateError.notReady }
     func completeTx(builder: TxBuilder) throws -> Psbt { throw WalletStateError.notReady }
+    func isMine(_ script: Script) -> Bool { false }
     func coins() -> [Coin] { [] }
     func transactions() -> [ViewableTransaction] { [] }
     func fees() async -> FeeRates? { return nil }
@@ -81,6 +83,7 @@ final class MockWallet: WalletState {
                metadata: TxMetadata(txid: "aaaabbbbccccddddeeeeffffaaaabbbbccccddddeeeeffff", date: Date(), height: 3483))
        ]
     }
+    func isMine(_ script: Script) -> Bool { false }
     func fees() async -> FeeRates? { return FeeRates(minimum: 1, average: 4) }
     func connected() -> Bool { true }
     func progress() -> Float { 0.58 }

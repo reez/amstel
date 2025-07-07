@@ -69,7 +69,11 @@ struct RecipientView: View {
     private func pasteFromClip() throws {
         let pasteboard = NSPasteboard.general
         if let addr = pasteboard.string(forType: .string) {
-            viewModel.recipient = try Address(address: addr, network: NETWORK)
+            let addr = try Address(address: addr, network: NETWORK)
+            if walletState.isMine(addr.scriptPubkey()) {
+                viewModel.isConsoldating = true
+            }
+            viewModel.recipient = addr
         }
     }
 }
