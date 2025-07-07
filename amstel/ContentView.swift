@@ -78,7 +78,12 @@ struct ContentView: View {
                 }
             }
         } detail: {
-            Text("No wallet selected")
+            VStack(spacing: 4) {
+                Text("No wallet selected")
+                if items.isEmpty {
+                    Text("Import a wallet with the top left toolbar. Accepted file types are txt and json.")
+                }
+            }
         }
     }
 

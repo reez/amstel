@@ -13,7 +13,7 @@ let NETWORK = Network.bitcoin
 #endif
 
 #if DEBUG
-let RECOVERY_HEIGHT: UInt32 = 160_000
+let RECOVERY_HEIGHT: UInt32 = 0
 #else
 let RECOVERY_HEIGHT: UInt32 = 440_000
 #endif

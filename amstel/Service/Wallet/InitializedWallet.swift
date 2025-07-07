@@ -61,8 +61,10 @@ final class InitializedWallet: WalletState {
     
     func fees() async -> FeeRates? {
         let broadcastMin = try? await self.client.minBroadcastFeerate()
+        let latestHash = wallet.latestCheckpoint().hash
+        let lastBlockAverage = (try? await client.averageFeeRate(blockhash: latestHash)) ?? FeeRate.fromSatPerKwu(satKwu: 250)
         if let broadcastMin = broadcastMin {
-            return FeeRates(minimum: broadcastMin.toSatPerVbCeil(), average: broadcastMin.toSatPerVbCeil())
+            return FeeRates(minimum: broadcastMin.toSatPerVbCeil(), average: lastBlockAverage.toSatPerVbCeil())
         }
         return nil
     }

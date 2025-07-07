@@ -16,6 +16,7 @@ struct AmountView: View {
     @State var amountString: String = ""
     @Binding var walletState: WalletState
     @Binding var isPresented: Bool
+    @Binding var errorMessage: ErrorMessage?
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -37,6 +38,7 @@ struct AmountView: View {
                         do {
                             try parseAmount()
                         } catch {
+                            errorMessage = ErrorMessage(message: "Invalid text input for amount")
                             isPresented = false
                         }
                     }
@@ -80,5 +82,6 @@ struct AmountView: View {
 #Preview {
     @Previewable @State var walletState: WalletState = MockWallet()
     @Previewable @State var isPresented: Bool = true
-    AmountView(viewModel: CreateTransactionViewModel(), amountString: "320432", walletState: $walletState, isPresented: $isPresented)
+    @Previewable @State var errorMessage: ErrorMessage? = nil
+    AmountView(viewModel: CreateTransactionViewModel(), amountString: "320432", walletState: $walletState, isPresented: $isPresented, errorMessage: $errorMessage)
 }

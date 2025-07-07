@@ -51,7 +51,7 @@ func importFromBitcoinCoreJson(from url: URL, withName name: String) throws -> I
         } else {
             throw ImportBitcoinCoreError.notMultipath
         }
-    } else if let array = try? decoder.decode([DescriptorImport].self, from: data) {
+    } else if let _ = try? decoder.decode([DescriptorImport].self, from: data) {
         throw ImportBitcoinCoreError.multipleDescriptorsNotSupported
     } else {
         throw ImportBitcoinCoreError.invalidFormat

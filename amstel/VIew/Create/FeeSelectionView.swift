@@ -10,7 +10,6 @@ import BitcoinDevKit
 struct FeeSelectionView: View {
     @ObservedObject var viewModel: CreateTransactionViewModel
     @Binding var walletState: WalletState
-    @Binding var isPresented: Bool
     @State var satPerVb: UInt64 = 1
     
     var body: some View {
@@ -59,5 +58,5 @@ struct FeeSelectionView: View {
 #Preview {
     @Previewable @State var walletState: WalletState = MockWallet()
     @Previewable @State var isPresented: Bool = true
-    FeeSelectionView(viewModel: CreateTransactionViewModel(), walletState: $walletState, isPresented: $isPresented)
+    FeeSelectionView(viewModel: CreateTransactionViewModel(), walletState: $walletState)
 }

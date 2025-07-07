@@ -11,6 +11,7 @@ struct ReviewView: View {
     @ObservedObject var viewModel: CreateTransactionViewModel
     @Binding var walletState: WalletState
     @Binding var isPresented: Bool
+    @Binding var errorMessage: ErrorMessage?
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -61,7 +62,7 @@ struct ReviewView: View {
                                 try buildAndSaveTx(builder: createTx, filepath: filepath)
                                 isPresented = false
                             } catch let e {
-                                print("\(e)")
+                                errorMessage = ErrorMessage(message: e.localizedDescription)
                                 isPresented = false
                             }
                         } else {
@@ -99,5 +100,6 @@ struct ReviewView: View {
 #Preview {
     @Previewable @State var walletState: WalletState = MockWallet()
     @Previewable @State var isPresented: Bool = true
-    ReviewView(viewModel: CreateTransactionViewModel(), walletState: $walletState, isPresented: $isPresented)
+    @Previewable @State var errorMessage: ErrorMessage? = nil
+    ReviewView(viewModel: CreateTransactionViewModel(), walletState: $walletState, isPresented: $isPresented, errorMessage: $errorMessage)
 }

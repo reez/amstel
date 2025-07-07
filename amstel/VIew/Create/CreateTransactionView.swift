@@ -16,6 +16,7 @@ struct CreateTransactionView: View {
     @ObservedObject var viewModel = CreateTransactionViewModel()
     @Binding var walletState: WalletState
     @Binding var isPresented: Bool
+    @Binding var errorMessage: ErrorMessage?
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -30,17 +31,17 @@ struct CreateTransactionView: View {
                 Spacer()
                 switch viewModel.step {
                 case .recipient:
-                    RecipientView(viewModel: viewModel, walletState: $walletState, isPresented: $isPresented)
+                    RecipientView(viewModel: viewModel, walletState: $walletState, isPresented: $isPresented, errorMessage: $errorMessage)
                 case .confirmRecipient:
                     ConfirmRecipientView(viewModel: viewModel)
                 case .amount:
-                    AmountView(viewModel: viewModel, walletState: $walletState, isPresented: $isPresented)
+                    AmountView(viewModel: viewModel, walletState: $walletState, isPresented: $isPresented, errorMessage: $errorMessage)
                 case .confirmAmount:
                     ConfirmAmountView(viewModel: viewModel)
                 case .fee:
-                    FeeSelectionView(viewModel: viewModel, walletState: $walletState, isPresented: $isPresented)
+                    FeeSelectionView(viewModel: viewModel, walletState: $walletState)
                 case .review:
-                    ReviewView(viewModel: viewModel, walletState: $walletState, isPresented: $isPresented)
+                    ReviewView(viewModel: viewModel, walletState: $walletState, isPresented: $isPresented, errorMessage: $errorMessage)
                 }
                 Spacer()
             }
@@ -71,5 +72,6 @@ struct CreateTransactionView: View {
 #Preview {
     @Previewable @State var walletState: WalletState = MockWallet()
     @Previewable @State var isPresented: Bool = true
-    CreateTransactionView(viewModel: CreateTransactionViewModel(), walletState: $walletState, isPresented: $isPresented)
+    @Previewable @State var errorMessage: ErrorMessage? = nil
+    CreateTransactionView(viewModel: CreateTransactionViewModel(), walletState: $walletState, isPresented: $isPresented, errorMessage: $errorMessage)
 }

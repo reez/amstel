@@ -24,7 +24,7 @@ struct WalletView: View {
     @State private var tab: Tab = .transactions
     @State private var isInitialLoad = true
     @State private var isCreatingTx = false
-    @State private var didError = false
+    @State private var errorMessage: ErrorMessage? = nil
     // Node attributes
     @State private var isConnected = false
     @State private var blockHeight: UInt32 = 0
@@ -37,7 +37,7 @@ struct WalletView: View {
     @State private var transactions: [ViewableTransaction] = []
     @State private var currentRevealed: ViewableAddress? = nil
     // Files
-    @State private var activeFile: URL? = nil
+    @State private var activeFile: TaggedPsbt? = nil
     @State private var isHoveringFile: Bool = false
     
     var body: some View {
@@ -58,7 +58,7 @@ struct WalletView: View {
                 
             }
             .padding()
-            .opacity(isInitialLoad || didError ? 0 : 1)
+            .opacity(isInitialLoad || errorMessage != nil ? 0 : 1)
             ProgressView(value: progress, total: 100.0)
                 .padding()
             Picker("", selection: $tab) {
@@ -87,7 +87,7 @@ struct WalletView: View {
                 }) {
                     Label("Create", systemImage: "document.badge.plus.fill")
                 }
-                .disabled(isInitialLoad || didError || isInitialSync)
+                .disabled(isInitialLoad || errorMessage != nil || isInitialSync)
                 Button(action: {
                     print("Unimplemented")
                 }) {
@@ -97,24 +97,29 @@ struct WalletView: View {
                     do {
                         self.currentRevealed = try self.walletState.receive()
                     } catch {
-                        didError = true
+                        self.errorMessage = ErrorMessage(message: "Failed to save wallet data. To prevent address re-use, addresses cannot be revealed after a database failure.")
                         self.currentRevealed = nil
                     }
                 }) {
                     Label("Recieve", systemImage: "qrcode")
                 }
-                .disabled(isInitialLoad || didError || isInitialSync)
+                .disabled(isInitialLoad || errorMessage != nil || isInitialSync)
             }
         }
-//        .sheet(item: $activeFile) { file in
-//            Text("File")
-//        }
+        // User flow sheets
         .sheet(item: $currentRevealed) { revealed in
             ReceiveView(addressActual: $currentRevealed, viewableAddress: revealed.address, uri: revealed.uri)
         }
         .sheet(isPresented: $isCreatingTx) {
-            CreateTransactionView(walletState: $walletState, isPresented: $isCreatingTx)
+            CreateTransactionView(walletState: $walletState, isPresented: $isCreatingTx, errorMessage: $errorMessage)
         }
+        .sheet(item: $activeFile) { _ in
+            EmptyView()
+        }
+        .sheet(item: $errorMessage) { message in
+            ErrorView(message: $errorMessage, messageReadable: message.message)
+        }
+        // Handle notifications from the node
         .onReceive(NotificationCenter.default.publisher(for: .progressDidUpdate)) { notification in
             self.blockHeight = self.walletState.height()
             self.isConnected = self.walletState.connected()
@@ -136,13 +141,13 @@ struct WalletView: View {
                 try start()
                 isInitialLoad = false
             } catch let e {
-                didError = true
-                print("\(e)")
+                errorMessage = ErrorMessage(message: e.localizedDescription)
             }
         }
         .onDisappear {
             walletState.stop()
         }
+        // Gesture handling
         .onDrop(of: [.fileURL], isTargeted: $isHoveringFile) { providers in
             if let prov = providers.first {
                 prov.loadItem(forTypeIdentifier: "public.file-url") { theFile, _ in
@@ -151,7 +156,12 @@ struct WalletView: View {
                             let allowedExtensions = ["psbt"]
                             if allowedExtensions.contains(url.pathExtension.lowercased()) {
                                 DispatchQueue.main.async {
-                                    self.activeFile = url
+                                    do {
+                                        let psbt = try Psbt.fromFile(path: url.path())
+                                        activeFile = TaggedPsbt(psbt: psbt)
+                                    } catch {
+                                        errorMessage = ErrorMessage(message: "Could not parse the PSBT file")
+                                    }
                                 }
                             }
                         }

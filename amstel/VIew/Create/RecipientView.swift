@@ -12,6 +12,7 @@ struct RecipientView: View {
     @ObservedObject var viewModel: CreateTransactionViewModel
     @Binding var walletState: WalletState
     @Binding var isPresented: Bool
+    @Binding var errorMessage: ErrorMessage?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -24,6 +25,7 @@ struct RecipientView: View {
                     do {
                         try pasteFromClip()
                     } catch {
+                        errorMessage = ErrorMessage(message: "Invalid address")
                         isPresented = false
                     }
                 }) {
@@ -38,6 +40,7 @@ struct RecipientView: View {
                     do {
                         try makeConsolidation()
                     } catch {
+                        errorMessage = ErrorMessage(message: "Invalid address")
                         isPresented = false
                     }
                 }) {
@@ -74,5 +77,6 @@ struct RecipientView: View {
 #Preview {
     @Previewable @State var state: WalletState = UninitializedWallet()
     @Previewable @State var presented = true
-    RecipientView(viewModel: CreateTransactionViewModel(), walletState: $state, isPresented: $presented)
+    @Previewable @State var errorMessage: ErrorMessage? = nil
+    RecipientView(viewModel: CreateTransactionViewModel(), walletState: $state, isPresented: $presented, errorMessage: $errorMessage)
 }
