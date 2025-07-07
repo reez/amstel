@@ -7,6 +7,7 @@
 import SwiftUI
 import BitcoinDevKit
 import Foundation
+import UniformTypeIdentifiers
 
 enum Tab {
     case transactions
@@ -90,7 +91,14 @@ struct WalletView: View {
                 }
                 .disabled(isInitialLoad || errorMessage != nil)
                 Button(action: {
-                    print("Unimplemented")
+                    if let url = openPsbtFile() {
+                        do {
+                            let psbt = try Psbt.fromFile(path: url.path())
+                            activeFile = TaggedPsbt(psbt: psbt)
+                        } catch {
+                            errorMessage = ErrorMessage(message: "Could not parse the PSBT file")
+                        }
+                    }
                 }) {
                     Label("Send", systemImage: "paperplane")
                 }
@@ -213,6 +221,24 @@ struct WalletView: View {
         self.transactions = self.walletState.transactions()
         self.coins = self.walletState.coins()
         walletState.start()
+    }
+    
+    
+    private func openPsbtFile() -> URL? {
+        let panel = NSOpenPanel()
+        let extensionId = UTType(filenameExtension: "psbt") ?? .data
+        panel.allowedContentTypes = [extensionId]
+        panel.allowsMultipleSelection = false
+        panel.canChooseDirectories = false
+        panel.canCreateDirectories = false
+        panel.title = "Select a PSBT"
+
+        let response = panel.runModal()
+        if response == .OK, let url = panel.url {
+            return url
+        } else {
+            return nil
+        }
     }
 }
 
