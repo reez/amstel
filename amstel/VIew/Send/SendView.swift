@@ -25,12 +25,14 @@ struct SendView: View {
                 VStack {
                     Text("You are sending \(recipient.amount.toSat()) satoshis to")
                         .monospaced()
+                        .padding()
                     AddressFormattedView(address: recipient.addr.description, columns: 4)
                         .padding()
                 }
             } else {
                 Text("You are sending coins to yourself")
                     .monospaced()
+                    .padding()
             }
         }
         .toolbar {
@@ -45,6 +47,7 @@ struct SendView: View {
                 } else {
                     Button("Send") {
                         waitingForBroadcast = true
+                        sendTx()
                     }
                 }
             }
@@ -58,6 +61,9 @@ struct SendView: View {
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: .txDidSend)) { notification in
+            #if DEBUG
+            print("Transaction notification received")
+            #endif
             activeFile = nil
         }
     }

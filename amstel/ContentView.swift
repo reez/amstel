@@ -24,6 +24,7 @@ struct ContentView: View {
                 ForEach(items) { item in
                     NavigationLink {
                         WalletView(item: item, keyClient: .live)
+                            .id(item)
                     } label: {
                         Text("\(item.name)")
                     }

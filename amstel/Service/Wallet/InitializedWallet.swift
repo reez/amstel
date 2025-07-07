@@ -119,7 +119,9 @@ final class InitializedWallet: WalletState {
                             NotificationCenter.default.post(name: .progressDidUpdate, object: nil)
                         }
                     case .transactionRejected(wtxid: _, reason: _):
-                        NotificationCenter.default.post(name: .txDidReject, object: nil)
+                        await MainActor.run {
+                            NotificationCenter.default.post(name: .txDidReject, object: nil)
+                        }
                     case let e:
                         #if DEBUG
                         print("\(e)")
@@ -147,7 +149,10 @@ final class InitializedWallet: WalletState {
                             self.currProgress = progress
                             NotificationCenter.default.post(name: .progressDidUpdate, object: nil)
                         }
-                    case .txGossiped(wtxid: _):
+                    case .txGossiped(wtxid: let wtxid):
+                        #if DEBUG
+                        print("\(wtxid)")
+                        #endif
                         await MainActor.run {
                             NotificationCenter.default.post(name: .txDidSend, object: nil)
                         }
