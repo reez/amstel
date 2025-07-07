@@ -63,6 +63,8 @@ final class InitializedWallet: WalletState {
     
     func completeTx(builder: TxBuilder) throws -> Psbt { return try builder.finish(wallet: self.wallet) }
     
+    func broadcastTx(transction: Transaction) throws { try client.broadcast(transaction: transction) }
+    
     func fees() async -> FeeRates? {
         let broadcastMin = try? await self.client.minBroadcastFeerate()
         let latestHash = wallet.latestCheckpoint().hash
@@ -116,6 +118,8 @@ final class InitializedWallet: WalletState {
                         await MainActor.run {
                             NotificationCenter.default.post(name: .progressDidUpdate, object: nil)
                         }
+                    case .transactionRejected(wtxid: _, reason: _):
+                        NotificationCenter.default.post(name: .txDidReject, object: nil)
                     case let e:
                         #if DEBUG
                         print("\(e)")
@@ -142,6 +146,10 @@ final class InitializedWallet: WalletState {
                         await MainActor.run {
                             self.currProgress = progress
                             NotificationCenter.default.post(name: .progressDidUpdate, object: nil)
+                        }
+                    case .txGossiped(wtxid: _):
+                        await MainActor.run {
+                            NotificationCenter.default.post(name: .txDidSend, object: nil)
                         }
                     case let e:
                         #if DEBUG

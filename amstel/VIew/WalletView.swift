@@ -113,8 +113,8 @@ struct WalletView: View {
         .sheet(isPresented: $isCreatingTx) {
             CreateTransactionView(walletState: $walletState, isPresented: $isCreatingTx, errorMessage: $errorMessage)
         }
-        .sheet(item: $activeFile) { _ in
-            EmptyView()
+        .sheet(item: $activeFile) { file in
+            SendView(psbt: file.psbt, walletState: walletState, errorMessage: $errorMessage, activeFile: $activeFile)
         }
         .sheet(item: $errorMessage) { message in
             ErrorView(message: $errorMessage, messageReadable: message.message)
@@ -135,6 +135,9 @@ struct WalletView: View {
             self.balance = self.walletState.balance()
             self.coins = self.walletState.coins()
             self.transactions = self.walletState.transactions()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .txDidReject)) { notification in
+            errorMessage = ErrorMessage(message: "Your transaction was rejected. Does it pay enough fees?")
         }
         .onAppear {
             do {
