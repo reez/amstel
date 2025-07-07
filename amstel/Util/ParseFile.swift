@@ -38,7 +38,7 @@ func importWalletFromTxtFile(from url: URL, withName name: String) throws -> Imp
 func importFromBitcoinCoreJson(from url: URL, withName name: String) throws -> ImportResponse {
     let data = try Data(contentsOf: url)
     let decoder = JSONDecoder()
-    
+
     if let single = try? decoder.decode(DescriptorImport.self, from: data) {
         let trimmed = single.desc.trimmingCharacters(in: .whitespacesAndNewlines)
         let descriptor = try Descriptor(descriptor: trimmed, network: NETWORK)

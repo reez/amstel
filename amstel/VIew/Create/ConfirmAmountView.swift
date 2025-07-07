@@ -5,12 +5,12 @@
 //  Created by Robert Netzke on 7/5/25.
 //
 
-import SwiftUI
 import BitcoinDevKit
+import SwiftUI
 
 struct ConfirmAmountView: View {
     @ObservedObject var viewModel: CreateTransactionViewModel
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             if viewModel.drainingWallet && !viewModel.isConsoldating {

@@ -8,7 +8,7 @@ import BitcoinDevKit
 import Foundation
 
 struct Coin: Equatable, Hashable, Identifiable {
-    let id: UUID = UUID()
+    let id: UUID = .init()
     let index: UInt32
     let txid: String
     let script: String

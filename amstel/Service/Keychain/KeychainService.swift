@@ -34,7 +34,7 @@ enum KeychainError: Error {
 
 private struct KeychainService {
     private let keychain: Keychain
-    
+
     init() {
         let keychain = Keychain(service: "com.robertnetzke.amstel.keychain")
             .label(Bundle.main.bundlePath)
@@ -42,12 +42,12 @@ private struct KeychainService {
             .accessibility(.whenUnlockedThisDeviceOnly)
         self.keychain = keychain
     }
-    
+
     func importKeys(importData: KeychainImport) throws {
         keychain[importData.recv.keyId] = importData.recv.descriptor
         keychain[importData.change.keyId] = importData.change.descriptor
     }
-    
+
     func getValues(ids: KeyIds) throws -> Values {
         guard let recvDescriptor = keychain[ids.recv] else {
             throw KeychainError.notFound
@@ -62,7 +62,7 @@ private struct KeychainService {
 struct KeyClient {
     let importKeys: (KeychainImport) throws -> Void
     let getValues: (KeyIds) throws -> Values
-    
+
     private init(
         importKeys: @escaping (KeychainImport) throws -> Void,
         getValues: @escaping (KeyIds) throws -> Values
@@ -80,10 +80,10 @@ extension KeyClient {
 }
 
 #if DEBUG
-extension KeyClient {
-    static let mock = Self(
-        importKeys: { _ in },
-        getValues: { _ in Values(recv: SIGNET_RECV, change: SIGNET_CHANGE, recvId: "") }
-    )
-}
+    extension KeyClient {
+        static let mock = Self(
+            importKeys: { _ in },
+            getValues: { _ in Values(recv: SIGNET_RECV, change: SIGNET_CHANGE, recvId: "") }
+        )
+    }
 #endif

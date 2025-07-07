@@ -4,8 +4,8 @@
 //
 //  Created by Robert Netzke on 7/2/25.
 //
-import SwiftUI
 import QRCode
+import SwiftUI
 
 struct ReceiveView: View {
     @Binding var addressActual: ViewableAddress?
@@ -17,9 +17,8 @@ struct ReceiveView: View {
             // Don't add padding
             QRCodeViewUI(content: uri,
                          onPixelShape: .curvePixel(),
-                         eyeStyle: QRCode.EyeShape.RoundedRect(cornerRadiusFraction: 0.9) as? QRCodeFillStyleGenerator
-            )
-            .padding()
+                         eyeStyle: QRCode.EyeShape.RoundedRect(cornerRadiusFraction: 0.9) as? QRCodeFillStyleGenerator)
+                .padding()
             AddressFormattedView(address: viewableAddress, columns: 4)
                 .font(.subheadline)
                 .padding()
@@ -44,7 +43,7 @@ struct ReceiveView: View {
 
 #Preview {
     @Previewable @State var addressActual: ViewableAddress? = ViewableAddress(
-        address:"bc1qexampleaddress1234567890",
+        address: "bc1qexampleaddress1234567890",
         uri: "bitcoin:bc1qexampleaddress1234567890",
         index: 0
     )

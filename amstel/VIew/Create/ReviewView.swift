@@ -12,7 +12,7 @@ struct ReviewView: View {
     var walletState: WalletState
     @Binding var isPresented: Bool
     @Binding var errorMessage: ErrorMessage?
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             if let amount = viewModel.value {
@@ -27,7 +27,7 @@ struct ReviewView: View {
                             .padding()
                     }
                 }
-                
+
             } else {
                 if viewModel.isConsoldating {
                     Text("You are consolidating into a single coin")
@@ -73,7 +73,7 @@ struct ReviewView: View {
             }
         }
     }
-    
+
     func promptUserForDirectory(completion: @escaping (URL?) -> Void) {
         let panel = NSOpenPanel()
         panel.canChooseDirectories = true
@@ -89,17 +89,16 @@ struct ReviewView: View {
             }
         }
     }
-    
+
     private func buildAndSaveTx(builder: TxBuilder, filepath: String) throws {
         let psbt = try walletState.completeTx(builder: builder)
         try psbt.writeToFile(path: filepath)
-        return
     }
 }
 
 #Preview {
     @Previewable @State var walletState: WalletState = MockWallet()
-    @Previewable @State var isPresented: Bool = true
+    @Previewable @State var isPresented = true
     @Previewable @State var errorMessage: ErrorMessage? = nil
     ReviewView(viewModel: CreateTransactionViewModel(), walletState: walletState, isPresented: $isPresented, errorMessage: $errorMessage)
 }

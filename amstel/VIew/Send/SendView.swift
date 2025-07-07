@@ -4,21 +4,21 @@
 //
 //  Created by Robert Netzke on 7/7/25.
 //
-import SwiftUI
 import BitcoinDevKit
+import SwiftUI
 
 struct SendView: View {
     var psbt: Psbt
     var walletState: WalletState
-    
+
     @Binding var errorMessage: ErrorMessage?
     @Binding var activeFile: TaggedPsbt?
-    
+
     @State var foreignRecipient: Recipient?
     @State var tx: BitcoinDevKit.Transaction?
-    
+
     @State var waitingForBroadcast: Bool = false
-    
+
     var body: some View {
         HStack {
             if let recipient = foreignRecipient {
@@ -58,14 +58,14 @@ struct SendView: View {
                 activeFile = nil
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: .txDidSend)) { notification in
+        .onReceive(NotificationCenter.default.publisher(for: .txDidSend)) { _ in
             #if DEBUG
-            print("Transaction notification received")
+                print("Transaction notification received")
             #endif
             activeFile = nil
         }
     }
-    
+
     private func sendTx() {
         if let transaction = tx {
             do {
@@ -76,7 +76,7 @@ struct SendView: View {
             }
         }
     }
-    
+
     private func extractTx() throws {
         let finalizeResult = psbt.finalize()
         if !finalizeResult.couldFinalize {

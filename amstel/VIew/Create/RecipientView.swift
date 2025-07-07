@@ -5,8 +5,8 @@
 //  Created by Robert Netzke on 7/5/25.
 //
 import AppKit
-import SwiftUI
 import BitcoinDevKit
+import SwiftUI
 
 struct RecipientView: View {
     @ObservedObject var viewModel: CreateTransactionViewModel
@@ -31,9 +31,7 @@ struct RecipientView: View {
                 }) {
                     Label("Paste", systemImage: "arrow.right.page.on.clipboard")
                 }
-                Button(action: {
-                    
-                }) {
+                Button(action: {}) {
                     Label("Scan", systemImage: "qrcode")
                 }
                 Button(action: {
@@ -59,13 +57,13 @@ struct RecipientView: View {
             }
         }
     }
-    
+
     private func makeConsolidation() throws {
         let nextAddr = try walletState.receive()
         viewModel.isConsoldating = true
         viewModel.recipient = try Address(address: nextAddr.address, network: NETWORK)
     }
-    
+
     private func pasteFromClip() throws {
         let pasteboard = NSPasteboard.general
         if let addr = pasteboard.string(forType: .string) {

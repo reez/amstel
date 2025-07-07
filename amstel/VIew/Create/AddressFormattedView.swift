@@ -9,10 +9,10 @@ import SwiftUI
 
 extension String {
     func chunked(into size: Int) -> [String] {
-        return stride(from: 0, to: self.count, by: size).map {
+        return stride(from: 0, to: count, by: size).map {
             let start = self.index(self.startIndex, offsetBy: $0)
             let end = self.index(start, offsetBy: size, limitedBy: self.endIndex) ?? self.endIndex
-            return String(self[start..<end])
+            return String(self[start ..< end])
         }
     }
 }
@@ -60,7 +60,7 @@ struct AddressFormattedView_Previews: PreviewProvider {
     static var previews: some View {
         AddressFormattedView(
             address:
-                "tb1pw6y0vtmsn46epvz0j8ddc46ketmp28t82p22hcrrkch3a0jhu40qe267dl"
+            "tb1pw6y0vtmsn46epvz0j8ddc46ketmp28t82p22hcrrkch3a0jhu40qe267dl"
         )
     }
 }

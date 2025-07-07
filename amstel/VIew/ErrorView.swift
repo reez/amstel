@@ -9,7 +9,7 @@ import SwiftUI
 struct ErrorView: View {
     @Binding var message: ErrorMessage?
     var messageReadable: String
-    
+
     var body: some View {
         VStack {
             Text("\(messageReadable)")
@@ -25,4 +25,3 @@ struct ErrorView: View {
         }
     }
 }
-

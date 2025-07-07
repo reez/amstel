@@ -7,7 +7,7 @@
 import Foundation
 
 struct ViewableTransaction: Equatable, Identifiable, Hashable {
-    let id: UUID = UUID()
+    let id: UUID = .init()
     let netSend: Bool
     let amount: UInt64
     let feeRate: UInt64?

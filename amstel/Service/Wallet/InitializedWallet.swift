@@ -17,38 +17,38 @@ final class InitializedWallet: WalletState {
     private var currHeight: UInt32 = 0
     private var running: Bool = false
     private var failure: String = ""
-    
+
     init(wallet: Wallet, client: CbfClient, node: CbfNode, persister: Persister) {
         self.wallet = wallet
         self.client = client
         self.node = node
         self.persister = persister
     }
-    
+
     func balance() -> ViewableBalance { return wallet.balance().intoViewable() }
-    
+
     func coins() -> [Coin] {
         wallet.listUnspent().map { $0.intoViewable() }
     }
-    
+
     func receive() throws -> ViewableAddress {
-        let addressInfo = self.wallet.revealNextAddress(keychain: .external)
-        try self.client.addRevealedScripts(wallet: self.wallet)
-        let _ = try self.wallet.persist(persister: self.persister)
+        let addressInfo = wallet.revealNextAddress(keychain: .external)
+        try client.addRevealedScripts(wallet: wallet)
+        let _ = try wallet.persist(persister: persister)
         return addressInfo.intoViewable()
     }
-    
+
     func isMine(_ script: Script) -> Bool {
         wallet.isMine(script: script)
     }
-    
+
     func transactions() -> [ViewableTransaction] {
-        let txs = self.wallet.transactions()
+        let txs = wallet.transactions()
         var vals: [ViewableTransaction] = []
         for tx in txs {
             let metadata = tx.intoMetadata()
-            let feeRate = try? self.wallet.calculateFeeRate(tx: tx.transaction)
-            let sentAndReceived = self.wallet.sentAndReceived(tx: tx.transaction)
+            let feeRate = try? wallet.calculateFeeRate(tx: tx.transaction)
+            let sentAndReceived = wallet.sentAndReceived(tx: tx.transaction)
             let netSend = sentAndReceived.sent.toSat() > sentAndReceived.received.toSat()
             let amount = if netSend {
                 sentAndReceived.sent.toSat() - sentAndReceived.received.toSat()
@@ -60,13 +60,13 @@ final class InitializedWallet: WalletState {
         }
         return vals
     }
-    
-    func completeTx(builder: TxBuilder) throws -> Psbt { return try builder.finish(wallet: self.wallet) }
-    
+
+    func completeTx(builder: TxBuilder) throws -> Psbt { return try builder.finish(wallet: wallet) }
+
     func broadcastTx(transction: Transaction) throws { try client.broadcast(transaction: transction) }
-    
+
     func fees() async -> FeeRates? {
-        let broadcastMin = try? await self.client.minBroadcastFeerate()
+        let broadcastMin = try? await client.minBroadcastFeerate()
         let latestHash = wallet.latestCheckpoint().hash
         let lastBlockAverage = (try? await client.averageFeeRate(blockhash: latestHash)) ?? FeeRate.fromSatPerKwu(satKwu: 250)
         if let broadcastMin = broadcastMin {
@@ -74,40 +74,40 @@ final class InitializedWallet: WalletState {
         }
         return nil
     }
-    
-    func connected() -> Bool { self.isConnected }
-    
-    func progress() -> Float { self.currProgress }
-    
-    func height() -> UInt32 { self.currHeight }
-    
-    func isRunning() -> Bool { self.running }
-    
-    func start() -> Void {
-        self.node.run()
-        self.running = true
-        self.handleLogs()
-        self.handleWarnings()
-        self.handleInfos()
-        self.handleUpdates()
+
+    func connected() -> Bool { isConnected }
+
+    func progress() -> Float { currProgress }
+
+    func height() -> UInt32 { currHeight }
+
+    func isRunning() -> Bool { running }
+
+    func start() {
+        node.run()
+        running = true
+        handleLogs()
+        handleWarnings()
+        handleInfos()
+        handleUpdates()
     }
-    
-    func stop() -> Void {
-        let _ = try? self.client.shutdown()
+
+    func stop() {
+        let _ = try? client.shutdown()
     }
-    
+
     private func handleLogs() {
         Task {
             while true {
                 if let log = try? await self.client.nextLog() {
                     #if DEBUG
-                    print(log)
+                        print(log)
                     #endif
                 }
             }
         }
     }
-    
+
     private func handleWarnings() {
         Task {
             while true {
@@ -124,14 +124,14 @@ final class InitializedWallet: WalletState {
                         }
                     case let e:
                         #if DEBUG
-                        print("\(e)")
+                            print("\(e)")
                         #endif
                     }
                 }
             }
         }
     }
-    
+
     private func handleInfos() {
         Task {
             while true {
@@ -142,30 +142,30 @@ final class InitializedWallet: WalletState {
                             self.isConnected = true
                             NotificationCenter.default.post(name: .progressDidUpdate, object: nil)
                         }
-                    case .newChainHeight(let height):
+                    case let .newChainHeight(height):
                         self.currHeight = height
-                    case .progress(let progress):
+                    case let .progress(progress):
                         await MainActor.run {
                             self.currProgress = progress
                             NotificationCenter.default.post(name: .progressDidUpdate, object: nil)
                         }
-                    case .txGossiped(wtxid: let wtxid):
+                    case let .txGossiped(wtxid: wtxid):
                         #if DEBUG
-                        print("\(wtxid)")
+                            print("\(wtxid)")
                         #endif
                         await MainActor.run {
                             NotificationCenter.default.post(name: .txDidSend, object: nil)
                         }
                     case let e:
                         #if DEBUG
-                        print("\(e)")
+                            print("\(e)")
                         #endif
                     }
                 }
             }
         }
     }
-    
+
     private func handleUpdates() {
         Task {
             while true {
@@ -179,7 +179,7 @@ final class InitializedWallet: WalletState {
                     } catch let e {
                         self.failure = e.localizedDescription
                     }
-                    
+
                 } else {
                     await MainActor.run {
                         self.isConnected = false
@@ -190,7 +190,7 @@ final class InitializedWallet: WalletState {
             }
         }
     }
-    
+
     private func extraBootstrap() {
         Task {
             let _ = await client.lookupHost(hostname: "seed.signet.bitcoin.sprovoost.nl")

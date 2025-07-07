@@ -1,0 +1,29 @@
+name: Weekly Swift Format
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'  # Runs every Monday at 00:00 UTC
+
+jobs:
+  format-and-pr:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Swift Format
+        run: |
+          brew install swiftformat
+
+      - name: Run Swift Format
+        run: |
+          swiftformat .
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          author: Fmt Bot <bot@example.com>
+          title: Weekly Swift Format
+          body: Automated Swift format
+          commit-message: Weekly format (${{ env.date }})

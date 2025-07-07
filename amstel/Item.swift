@@ -15,12 +15,12 @@ final class WalletItem {
     var name: String
     var createdAt: Date
     var airGap: Bool
-    
+
     init(recvPath: String, changePath: String, name: String, timestamp: Date = Date(), airGap: Bool = true) {
-        self.recvKeychainId = recvPath
-        self.changeKeychainId = changePath
+        recvKeychainId = recvPath
+        changeKeychainId = changePath
         self.name = name
-        self.createdAt = timestamp
+        createdAt = timestamp
         self.airGap = airGap
     }
 }

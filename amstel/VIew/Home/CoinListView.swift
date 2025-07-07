@@ -1,12 +1,12 @@
 //
-//  CoinView.swift
+//  CoinListView.swift
 //  amstel
 //
 //  Created by Robert Netzke on 7/4/25.
 //
 
-import SwiftUI
 import Foundation
+import SwiftUI
 
 struct CoinListView: View {
     @Binding var coins: [Coin]
@@ -57,11 +57,10 @@ struct CoinListView: View {
                                                   sats: 21404,
                                                   change: false),
                                              Coin(index: 34,
-                                                   txid: "aaaabbbbccccddddeeeeffffaaaabbbbccccddddeeeeffff",
-                                                   script: "0P_0 OP_PUSHDATA20",
-                                                   date: Date(),
-                                                   sats: 21404,
-                                                   change: true)
-    ]
+                                                  txid: "aaaabbbbccccddddeeeeffffaaaabbbbccccddddeeeeffff",
+                                                  script: "0P_0 OP_PUSHDATA20",
+                                                  date: Date(),
+                                                  sats: 21404,
+                                                  change: true)]
     CoinListView(coins: $coins)
 }

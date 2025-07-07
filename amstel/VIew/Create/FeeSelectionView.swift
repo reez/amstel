@@ -4,14 +4,14 @@
 //
 //  Created by Robert Netzke on 7/5/25.
 //
-import SwiftUI
 import BitcoinDevKit
+import SwiftUI
 
 struct FeeSelectionView: View {
     @ObservedObject var viewModel: CreateTransactionViewModel
     var walletState: WalletState
     @State var satPerVb: UInt64 = 1
-    
+
     var body: some View {
         VStack(spacing: 4) {
             Spacer()
@@ -36,10 +36,9 @@ struct FeeSelectionView: View {
                 Text("Fee estimates unavailable")
                     .font(.subheadline)
                     .padding()
-                
             }
             Spacer()
-            Stepper(value: $satPerVb, in: 1...100, step: 1) {
+            Stepper(value: $satPerVb, in: 1 ... 100, step: 1) {
                 Text("Selected fee \(satPerVb) sat/vB")
             }
             Spacer()
@@ -57,6 +56,6 @@ struct FeeSelectionView: View {
 
 #Preview {
     @Previewable @State var walletState: WalletState = MockWallet()
-    @Previewable @State var isPresented: Bool = true
+    @Previewable @State var isPresented = true
     FeeSelectionView(viewModel: CreateTransactionViewModel(), walletState: walletState)
 }

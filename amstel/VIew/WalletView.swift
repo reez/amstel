@@ -4,9 +4,9 @@
 //
 //  Created by Robert Netzke on 7/2/25.
 //
-import SwiftUI
 import BitcoinDevKit
 import Foundation
+import SwiftUI
 import UniformTypeIdentifiers
 
 enum Tab {
@@ -17,9 +17,9 @@ enum Tab {
 struct WalletView: View {
     let item: WalletItem
     let keyClient: KeyClient
-    
+
     @AppStorage("numConns") private var numConns: Int = 3
-    
+
     @State private var walletState: WalletState = UninitializedWallet()
     // UI
     @State private var tab: Tab = .transactions
@@ -34,14 +34,14 @@ struct WalletView: View {
     @State private var progress: Float = 0.0
     @State private var isInitialSync: Bool = true
     // Wallet attributes
-    @State private var balance: ViewableBalance = ViewableBalance(bitcoin: 0.0, sats: 0)
+    @State private var balance: ViewableBalance = .init(bitcoin: 0.0, sats: 0)
     @State private var coins: [Coin] = []
     @State private var transactions: [ViewableTransaction] = []
     @State private var currentRevealed: ViewableAddress? = nil
     // Files
     @State private var activeFile: TaggedPsbt? = nil
     @State private var isHoveringFile: Bool = false
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -57,7 +57,6 @@ struct WalletView: View {
                 } else {
                     Image(systemName: "network.slash")
                 }
-                
             }
             .padding()
             .opacity(isInitialLoad || errorMessage != nil ? 0 : 1)
@@ -133,13 +132,13 @@ struct WalletView: View {
                 .padding()
         }
         // Handle notifications from the node
-        .onReceive(NotificationCenter.default.publisher(for: .progressDidUpdate)) { notification in
+        .onReceive(NotificationCenter.default.publisher(for: .progressDidUpdate)) { _ in
             self.blockHeight = self.walletState.height()
             self.isConnected = self.walletState.connected()
             self.dead = !self.walletState.isRunning()
             self.progress = self.walletState.progress()
         }
-        .onReceive(NotificationCenter.default.publisher(for: .walletDidUpdate)) { notification in
+        .onReceive(NotificationCenter.default.publisher(for: .walletDidUpdate)) { _ in
             self.isInitialSync = false
             self.firstSync = false
             self.blockHeight = self.walletState.height()
@@ -150,7 +149,7 @@ struct WalletView: View {
             self.coins = self.walletState.coins()
             self.transactions = self.walletState.transactions()
         }
-        .onReceive(NotificationCenter.default.publisher(for: .txDidReject)) { notification in
+        .onReceive(NotificationCenter.default.publisher(for: .txDidReject)) { _ in
             errorMessage = ErrorMessage(message: "Your transaction was rejected. Does it pay enough fees?")
         }
         .onAppear {
@@ -183,15 +182,14 @@ struct WalletView: View {
                             }
                         }
                     }
-                    
                 }
             }
             return true
         }
     }
-    
+
     private func start() throws {
-        let backup = try self.keyClient.getValues(KeyIds(recv: item.recvKeychainId, change: item.changeKeychainId))
+        let backup = try keyClient.getValues(KeyIds(recv: item.recvKeychainId, change: item.changeKeychainId))
         let path = String.walletSqliteFile(id: backup.recvId)
         let conn = try Persister.newSqlite(path: path)
         let recv = try Descriptor(descriptor: backup.recv, network: NETWORK)
@@ -199,7 +197,7 @@ struct WalletView: View {
         let wallet = try Wallet.load(descriptor: recv, changeDescriptor: change, persister: conn)
         let isRecovering = wallet.latestCheckpoint().height == 0
         if isRecovering {
-            self.firstSync = true
+            firstSync = true
         }
         let scanType = if isRecovering {
             ScanType.recovery(fromHeight: RECOVERY_HEIGHT)
@@ -217,13 +215,12 @@ struct WalletView: View {
             .peers(peers: [PEER_1, PEER_2, PEER_3])
             .build(wallet: wallet)
         walletState = InitializedWallet(wallet: wallet, client: cbf.client, node: cbf.node, persister: conn)
-        self.balance = self.walletState.balance()
-        self.transactions = self.walletState.transactions()
-        self.coins = self.walletState.coins()
+        balance = walletState.balance()
+        transactions = walletState.transactions()
+        coins = walletState.coins()
         walletState.start()
     }
-    
-    
+
     private func openPsbtFile() -> URL? {
         let panel = NSOpenPanel()
         let extensionId = UTType(filenameExtension: "psbt") ?? .data

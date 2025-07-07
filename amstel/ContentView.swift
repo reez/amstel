@@ -5,18 +5,17 @@
 //  Created by Robert Netzke on 7/2/25.
 //
 
-import SwiftUI
-import SwiftData
 import BitcoinDevKit
+import SwiftData
+import SwiftUI
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [WalletItem]
-    
+
     @State private var pendingFileURL: URL?
     @State private var isNamingWallet = false
     @State private var newWalletName = ""
-
 
     var body: some View {
         NavigationSplitView {
@@ -49,16 +48,16 @@ struct ContentView: View {
                             if let url = pendingFileURL {
                                 do {
                                     let importResponse = try importWalletFromTxtFile(from: url, withName: newWalletName)
-                                    let _ = try Wallet.init(recvId: importResponse.recvKeychainId,
-                                                    recv: importResponse.recvDescriptor,
-                                                    change: importResponse.changeDescriptor)
+                                    let _ = try Wallet(recvId: importResponse.recvKeychainId,
+                                                       recv: importResponse.recvDescriptor,
+                                                       change: importResponse.changeDescriptor)
                                     withAnimation {
                                         let newWallet = WalletItem(recvPath: importResponse.recvKeychainId, changePath: importResponse.changeKeychainId, name: newWalletName)
                                         modelContext.insert(newWallet)
                                     }
                                 } catch let e {
                                     #if DEBUG
-                                    print("\(e)")
+                                        print("\(e)")
                                     #endif
                                 }
                             }

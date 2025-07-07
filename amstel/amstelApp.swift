@@ -5,8 +5,8 @@
 //  Created by Robert Netzke on 7/2/25.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 @main
 struct amstelApp: App {

@@ -4,8 +4,8 @@
 //
 //  Created by Robert Netzke on 7/5/25.
 //
-import SwiftUI
 import BitcoinDevKit
+import SwiftUI
 
 enum ParseFailed: Error {
     case invalid
@@ -17,7 +17,7 @@ struct AmountView: View {
     var walletState: WalletState
     @Binding var isPresented: Bool
     @Binding var errorMessage: ErrorMessage?
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("You have \(walletState.balance().sats) satoshis available")
@@ -60,7 +60,7 @@ struct AmountView: View {
             }
         }
     }
-    
+
     private func parseAmount() throws {
         let parsedAmountString = amountString.trimmingCharacters(in: .whitespacesAndNewlines)
         switch viewModel.usingDenom {
@@ -81,7 +81,7 @@ struct AmountView: View {
 
 #Preview {
     @Previewable @State var walletState: WalletState = MockWallet()
-    @Previewable @State var isPresented: Bool = true
+    @Previewable @State var isPresented = true
     @Previewable @State var errorMessage: ErrorMessage? = nil
     AmountView(viewModel: CreateTransactionViewModel(), amountString: "320432", walletState: walletState, isPresented: $isPresented, errorMessage: $errorMessage)
 }

@@ -5,22 +5,22 @@
 //  Created by Robert Netzke on 7/5/25.
 //
 
-import SwiftUI
 import BitcoinDevKit
+import SwiftUI
 
 struct CreateTransactionView: View {
     @ObservedObject var viewModel = CreateTransactionViewModel()
     var walletState: WalletState
     @Binding var isPresented: Bool
     @Binding var errorMessage: ErrorMessage?
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("\(viewModel.step.title)")
                 .font(.headline)
             ProgressView(
-                 value: Double(viewModel.step.index + 1),
-                 total: Double(Step.totalSteps)
+                value: Double(viewModel.step.index + 1),
+                total: Double(Step.totalSteps)
             )
             .labelsHidden()
             HStack {
@@ -55,7 +55,7 @@ struct CreateTransactionView: View {
             }
         }
     }
-    
+
     private func getFees() async {
         let fees = await walletState.fees()
         if let fees = fees {
@@ -67,7 +67,7 @@ struct CreateTransactionView: View {
 
 #Preview {
     @Previewable @State var walletState: WalletState = MockWallet()
-    @Previewable @State var isPresented: Bool = true
+    @Previewable @State var isPresented = true
     @Previewable @State var errorMessage: ErrorMessage? = nil
     CreateTransactionView(viewModel: CreateTransactionViewModel(), walletState: walletState, isPresented: $isPresented, errorMessage: $errorMessage)
 }

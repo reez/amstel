@@ -7,7 +7,7 @@
 
 enum Flow: CaseIterable {
     case recipient, confirmRecipient, amount, confirmAmount, fee, review
-    
+
     var index: Int {
         return Flow.allCases.firstIndex(of: self) ?? 0
     }
@@ -15,7 +15,7 @@ enum Flow: CaseIterable {
     static var totalSteps: Int {
         return Flow.allCases.count
     }
-    
+
     var title: String {
         switch self {
         case .recipient:

@@ -51,7 +51,7 @@ enum Timestamp: Codable {
         switch self {
         case .now:
             try container.encode("now")
-        case .seconds(let value):
+        case let .seconds(value):
             try container.encode(value)
         }
     }
@@ -75,9 +75,9 @@ enum RangeOrInt: Codable {
     func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         switch self {
-        case .single(let value):
+        case let .single(value):
             try container.encode(value)
-        case .range(let values):
+        case let .range(values):
             try container.encode(values)
         }
     }

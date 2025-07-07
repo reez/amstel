@@ -9,25 +9,25 @@ import Foundation
 
 extension Balance {
     func intoViewable() -> ViewableBalance {
-        let amount = self.total
+        let amount = total
         return ViewableBalance(bitcoin: amount.toBtc(), sats: amount.toSat())
     }
 }
 
 extension LocalOutput {
     func intoViewable() -> Coin {
-        let val = self.txout.value
-        let txid = self.outpoint.txid.description
-        let index = self.derivationIndex
-        let script = self.txout.scriptPubkey.toBytes().description
-        let change = switch self.keychain {
+        let val = txout.value
+        let txid = outpoint.txid.description
+        let index = derivationIndex
+        let script = txout.scriptPubkey.toBytes().description
+        let change = switch keychain {
         case .internal: true
         case .external: false
         }
-        let (_, time) = switch self.chainPosition {
-        case .confirmed(let confirmation_block_time, _):
+        let (_, time) = switch chainPosition {
+        case let .confirmed(confirmation_block_time, _):
             (confirmation_block_time.blockId.height, Date(timeIntervalSince1970: TimeInterval(confirmation_block_time.confirmationTime)))
-        case .unconfirmed(_): (UInt32(0), Date())
+        case .unconfirmed: (UInt32(0), Date())
         }
         return Coin(index: index, txid: txid, script: script, date: time, sats: val.toSat(), change: change)
     }
@@ -35,11 +35,11 @@ extension LocalOutput {
 
 extension CanonicalTx {
     func intoMetadata() -> TxMetadata {
-        let txid = self.transaction.computeTxid().description
-        let (chainPos, time) = switch self.chainPosition {
-        case .confirmed(let confirmation_block_time, _):
+        let txid = transaction.computeTxid().description
+        let (chainPos, time) = switch chainPosition {
+        case let .confirmed(confirmation_block_time, _):
             (confirmation_block_time.blockId.height, Date(timeIntervalSince1970: TimeInterval(confirmation_block_time.confirmationTime)))
-        case .unconfirmed(_): (UInt32(0), Date())
+        case .unconfirmed: (UInt32(0), Date())
         }
         return TxMetadata(txid: txid, date: time, height: chainPos)
     }
@@ -60,7 +60,7 @@ extension String {
         let walletDir = documentsDir.appendingPathComponent(id)
         return walletDir.path()
     }
-    
+
     static func walletSqliteFile(id: String) -> String {
         let documentsDir = URL.documentsDirectory
         let walletDir = documentsDir.appendingPathComponent(id)
@@ -84,6 +84,6 @@ extension Wallet {
         let change = try Descriptor(descriptor: change, network: NETWORK)
         let conn = try Persister.newSqlite(path: String.walletSqliteFile(id: recvId))
         try self.init(descriptor: recv, changeDescriptor: change, network: NETWORK, persister: conn)
-        let _ = try self.persist(persister: conn)
+        _ = try persist(persister: conn)
     }
 }
