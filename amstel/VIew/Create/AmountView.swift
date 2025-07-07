@@ -14,7 +14,7 @@ enum ParseFailed: Error {
 struct AmountView: View {
     @ObservedObject var viewModel: CreateTransactionViewModel
     @State var amountString: String = ""
-    @Binding var walletState: WalletState
+    var walletState: WalletState
     @Binding var isPresented: Bool
     @Binding var errorMessage: ErrorMessage?
     
@@ -83,5 +83,5 @@ struct AmountView: View {
     @Previewable @State var walletState: WalletState = MockWallet()
     @Previewable @State var isPresented: Bool = true
     @Previewable @State var errorMessage: ErrorMessage? = nil
-    AmountView(viewModel: CreateTransactionViewModel(), amountString: "320432", walletState: $walletState, isPresented: $isPresented, errorMessage: $errorMessage)
+    AmountView(viewModel: CreateTransactionViewModel(), amountString: "320432", walletState: walletState, isPresented: $isPresented, errorMessage: $errorMessage)
 }

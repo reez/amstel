@@ -88,7 +88,7 @@ struct WalletView: View {
                 }) {
                     Label("Create", systemImage: "document.badge.plus.fill")
                 }
-                .disabled(isInitialLoad || errorMessage != nil || isInitialSync)
+                .disabled(isInitialLoad || errorMessage != nil)
                 Button(action: {
                     print("Unimplemented")
                 }) {
@@ -112,7 +112,7 @@ struct WalletView: View {
             ReceiveView(addressActual: $currentRevealed, viewableAddress: revealed.address, uri: revealed.uri)
         }
         .sheet(isPresented: $isCreatingTx) {
-            CreateTransactionView(walletState: $walletState, isPresented: $isCreatingTx, errorMessage: $errorMessage)
+            CreateTransactionView(walletState: walletState, isPresented: $isCreatingTx, errorMessage: $errorMessage)
         }
         .sheet(item: $activeFile) { file in
             SendView(psbt: file.psbt, walletState: walletState, errorMessage: $errorMessage, activeFile: $activeFile)

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ReviewView: View {
     @ObservedObject var viewModel: CreateTransactionViewModel
-    @Binding var walletState: WalletState
+    var walletState: WalletState
     @Binding var isPresented: Bool
     @Binding var errorMessage: ErrorMessage?
     
@@ -101,5 +101,5 @@ struct ReviewView: View {
     @Previewable @State var walletState: WalletState = MockWallet()
     @Previewable @State var isPresented: Bool = true
     @Previewable @State var errorMessage: ErrorMessage? = nil
-    ReviewView(viewModel: CreateTransactionViewModel(), walletState: $walletState, isPresented: $isPresented, errorMessage: $errorMessage)
+    ReviewView(viewModel: CreateTransactionViewModel(), walletState: walletState, isPresented: $isPresented, errorMessage: $errorMessage)
 }

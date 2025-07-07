@@ -8,13 +8,9 @@
 import SwiftUI
 import BitcoinDevKit
 
-enum AddressValidation {
-    case unknown, valid, invalid
-}
-
 struct CreateTransactionView: View {
     @ObservedObject var viewModel = CreateTransactionViewModel()
-    @Binding var walletState: WalletState
+    var walletState: WalletState
     @Binding var isPresented: Bool
     @Binding var errorMessage: ErrorMessage?
     
@@ -23,25 +19,25 @@ struct CreateTransactionView: View {
             Text("\(viewModel.step.title)")
                 .font(.headline)
             ProgressView(
-                         value: Double(viewModel.step.index + 1),
-                         total: Double(Step.totalSteps)
+                 value: Double(viewModel.step.index + 1),
+                 total: Double(Step.totalSteps)
             )
             .labelsHidden()
             HStack {
                 Spacer()
                 switch viewModel.step {
                 case .recipient:
-                    RecipientView(viewModel: viewModel, walletState: $walletState, isPresented: $isPresented, errorMessage: $errorMessage)
+                    RecipientView(viewModel: viewModel, walletState: walletState, isPresented: $isPresented, errorMessage: $errorMessage)
                 case .confirmRecipient:
                     ConfirmRecipientView(viewModel: viewModel)
                 case .amount:
-                    AmountView(viewModel: viewModel, walletState: $walletState, isPresented: $isPresented, errorMessage: $errorMessage)
+                    AmountView(viewModel: viewModel, walletState: walletState, isPresented: $isPresented, errorMessage: $errorMessage)
                 case .confirmAmount:
                     ConfirmAmountView(viewModel: viewModel)
                 case .fee:
-                    FeeSelectionView(viewModel: viewModel, walletState: $walletState)
+                    FeeSelectionView(viewModel: viewModel, walletState: walletState)
                 case .review:
-                    ReviewView(viewModel: viewModel, walletState: $walletState, isPresented: $isPresented, errorMessage: $errorMessage)
+                    ReviewView(viewModel: viewModel, walletState: walletState, isPresented: $isPresented, errorMessage: $errorMessage)
                 }
                 Spacer()
             }
@@ -73,5 +69,5 @@ struct CreateTransactionView: View {
     @Previewable @State var walletState: WalletState = MockWallet()
     @Previewable @State var isPresented: Bool = true
     @Previewable @State var errorMessage: ErrorMessage? = nil
-    CreateTransactionView(viewModel: CreateTransactionViewModel(), walletState: $walletState, isPresented: $isPresented, errorMessage: $errorMessage)
+    CreateTransactionView(viewModel: CreateTransactionViewModel(), walletState: walletState, isPresented: $isPresented, errorMessage: $errorMessage)
 }

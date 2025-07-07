@@ -10,7 +10,7 @@ import BitcoinDevKit
 
 struct RecipientView: View {
     @ObservedObject var viewModel: CreateTransactionViewModel
-    @Binding var walletState: WalletState
+    var walletState: WalletState
     @Binding var isPresented: Bool
     @Binding var errorMessage: ErrorMessage?
 
@@ -82,5 +82,5 @@ struct RecipientView: View {
     @Previewable @State var state: WalletState = UninitializedWallet()
     @Previewable @State var presented = true
     @Previewable @State var errorMessage: ErrorMessage? = nil
-    RecipientView(viewModel: CreateTransactionViewModel(), walletState: $state, isPresented: $presented, errorMessage: $errorMessage)
+    RecipientView(viewModel: CreateTransactionViewModel(), walletState: state, isPresented: $presented, errorMessage: $errorMessage)
 }

@@ -35,6 +35,7 @@ struct SendView: View {
                     .padding()
             }
         }
+        .padding()
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button("Cancel") {
