@@ -2,6 +2,20 @@
 
 Amstel is a macOS desktop app to manage descriptor-based Bitcoin wallets. It is built with SwiftUI, [Bitcoin Dev Kit](https://github.com/bitcoindevkit), and the BDK [Foreign Language Bindings](https://github.com/bitcoindevkit/bdk-ffi). Wallet data is sourced from the block chain using compact block filters with the [Kyoto](https://github.com/2140-dev/kyoto) BIP-157 and BIP-158 implementation.
 
+## Philosophy
+
+Managing Bitcoin should be simple and boring. The user interface of Amstel is intentionally limited in visual cluter. There are three main actions one would do when using wallet that manages hardware signer(s): create a transaction, send a transaction, receive a payment. Each of these are found in the top right corner of the screen as simple icons. Building a transaction involves a very simple flow that requires you to confirm your step at every configuration. Sending a transction also requires you to confirm the destination address. Receiving a transction can be done by scanning a QR code or copying an address.
+
+## Build
+
+Application binaries are not distributed yet. Run this application on Signet:
+
+```
+git clone https://github.com/rustaceanrob/amstel.git
+```
+
+And open the project in XCode.
+
 ## Maintenance
 
 This repository will be maintained to the degree it remains relevant. If [Bitcoin Core](https://github.com/bitcoin/bitcoin) implements compact block filter syncing for light clients, then this wallet becomes superfluous. As long as wallet is useful, then it will be maintained. Import file formats will remain backward compatible.
@@ -14,7 +28,7 @@ This app may contain bugs, use it at your own risk.
 
 ```Q: Will Amstel release on other plaforms?```
 
-No, to keep the project maintainable, macOS is the only supported target. You are encouraged to build a Linux or Windows port.
+No, to keep the project maintainable, macOS is the only supported target. I recommend the [Bitcoin Safe](https://github.com/andreasgriffin/bitcoin-safe) project.
 
 ```Q: What desciptors does Amstel support?```
 
