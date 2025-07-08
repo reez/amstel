@@ -33,5 +33,8 @@ import BitcoinDevKit
     let PEER_3 = Peer(address: ip_3, port: PORT, v2Transport: false)
 #endif
 
+let LOCAL_HOST = IpAddress.fromIpv4(q1: 127, q2: 0, q3: 0, q4: 1)
+let TOR_PROXY = Socks5Proxy(address: LOCAL_HOST, port: 9050)
+
 let SIGNET_RECV = "wpkh([9122d9e0/84'/1'/0']tpubDCYVtmaSaDzTxcgvoP5AHZNbZKZzrvoNH9KARep88vESc6MxRqAp4LmePc2eeGX6XUxBcdhAmkthWTDqygPz2wLAyHWisD299Lkdrj5egY6/0/*)"
 let SIGNET_CHANGE = "wpkh([9122d9e0/84'/1'/0']tpubDCYVtmaSaDzTxcgvoP5AHZNbZKZzrvoNH9KARep88vESc6MxRqAp4LmePc2eeGX6XUxBcdhAmkthWTDqygPz2wLAyHWisD299Lkdrj5egY6/1/*)"

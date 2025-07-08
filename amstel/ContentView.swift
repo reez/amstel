@@ -17,6 +17,7 @@ struct ContentView: View {
     @State private var isNamingWallet = false
     @State private var newWalletName = ""
     @State private var isSupportedExtension: Bool = false
+    @State private var isShowingSettings: Bool = false
 
     var body: some View {
         NavigationSplitView {
@@ -32,6 +33,9 @@ struct ContentView: View {
                 .onDelete(perform: deleteItems)
             }
             .navigationSplitViewColumnWidth(min: 180, ideal: 200)
+            .sheet(isPresented: $isShowingSettings) {
+                SettingsView(isPresented: $isShowingSettings)
+            }
             .sheet(isPresented: $isNamingWallet) {
                 VStack(spacing: 20) {
                     Text("Name your wallet")
@@ -86,6 +90,11 @@ struct ContentView: View {
                 ToolbarItem {
                     Button(action: addItem) {
                         Label("Add Item", systemImage: "plus")
+                    }
+                }
+                ToolbarItem {
+                    Button(action: { isShowingSettings = true }) {
+                        Label("Open Settings", systemImage: "gear")
                     }
                 }
             }

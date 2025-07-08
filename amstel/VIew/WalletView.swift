@@ -19,6 +19,7 @@ struct WalletView: View {
     let keyClient: KeyClient
 
     @AppStorage("numConns") private var numConns: Int = 3
+    @AppStorage("useProxy") private var useProxy: Bool = false
 
     @State private var walletState: WalletState = UninitializedWallet()
     // UI
@@ -128,7 +129,7 @@ struct WalletView: View {
             ErrorView(message: $errorMessage, messageReadable: message.message)
         }
         .popover(isPresented: $firstSync) {
-            Text("The first sync for a new import will take a while, anywhere between 10 minutes and an hour. Subsequent sync times will be much faster. Please leave the application open.")
+            Text("The first sync for a new import will take a while, anywhere between 10-60 minutes. Subsequent sync times will be much faster. Please leave the application open.")
                 .padding()
         }
         // Handle notifications from the node
@@ -208,11 +209,17 @@ struct WalletView: View {
             try FileManager.default.createDirectory(at: URL.nodeDirectoryPath(), withIntermediateDirectories: false)
         }
         let conns = UInt8(numConns)
-        let cbf = try CbfBuilder()
+        var builder = CbfBuilder()
+        if useProxy {
+            builder = builder.socks5Proxy(proxy: TOR_PROXY)
+        }
+        let cbf = try builder
             .dataDir(dataDir: URL.nodeDirectoryPath().path())
             .scanType(scanType: scanType)
             .connections(connections: conns)
+        #if DEBUG
             .peers(peers: [PEER_1, PEER_2, PEER_3])
+        #endif
             .build(wallet: wallet)
         walletState = InitializedWallet(wallet: wallet, client: cbf.client, node: cbf.node, persister: conn)
         balance = walletState.balance()
