@@ -8,6 +8,10 @@ import BitcoinDevKit
 import Foundation
 import KeychainAccess
 
+enum InvalidFileExtension: Error {
+    case unsupported
+}
+
 struct ImportResponse {
     var name: String
     var recvKeychainId: String
@@ -16,7 +20,7 @@ struct ImportResponse {
     var changeDescriptor: String
 }
 
-enum ImportTxtError: Error {
+enum ImportError: Error {
     case notMultipath
     case tooManyPaths
 }
@@ -27,11 +31,11 @@ func importWalletFromTxtFile(from url: URL, withName name: String) throws -> Imp
     if descriptor.isMultipath() {
         let descriptorList = try descriptor.toSingleDescriptors()
         if descriptorList.count != 2 {
-            throw ImportTxtError.tooManyPaths
+            throw ImportError.tooManyPaths
         }
         return try importFromTwoPath(descriptorList, name: name)
     } else {
-        throw ImportTxtError.notMultipath
+        throw ImportError.notMultipath
     }
 }
 
@@ -45,14 +49,46 @@ func importFromBitcoinCoreJson(from url: URL, withName name: String) throws -> I
         if descriptor.isMultipath() {
             let descriptorList = try descriptor.toSingleDescriptors()
             if descriptorList.count != 2 {
-                throw ImportBitcoinCoreError.tooManyDescriptors
+                throw ImportError.tooManyPaths
             }
             return try importFromTwoPath(descriptorList, name: name)
         } else {
-            throw ImportBitcoinCoreError.notMultipath
+            throw ImportError.notMultipath
         }
-    } else if let _ = try? decoder.decode([DescriptorImport].self, from: data) {
-        throw ImportBitcoinCoreError.multipleDescriptorsNotSupported
+    } else if let backs = try? decoder.decode([DescriptorImport].self, from: data) {
+        var recvId: DescriptorId
+        var changeId: DescriptorId
+        var recvDescriptor: Descriptor
+        var changeDescriptor: Descriptor
+        
+        if backs.count != 2 {
+            throw ImportError.tooManyPaths
+        }
+        let backOne = backs[0]
+        let trimmedOne = backOne.desc.trimmingCharacters(in: .whitespacesAndNewlines)
+        let descriptorOne = try Descriptor(descriptor: trimmedOne, network: NETWORK)
+        if descriptorOne.isMultipath() {
+            throw ImportError.tooManyPaths
+        }
+        recvId = descriptorOne.descriptorId()
+        recvDescriptor = descriptorOne
+        let backTwo = backs[1]
+        let trimmedTwo = backTwo.desc.trimmingCharacters(in: .whitespacesAndNewlines)
+        let descriptorTwo = try Descriptor(descriptor: trimmedTwo, network: NETWORK)
+        if descriptorTwo.isMultipath() {
+            throw ImportError.tooManyPaths
+        }
+        changeId = descriptorTwo.descriptorId()
+        changeDescriptor = descriptorTwo
+        let recvBackup = Backup(keyId: recvId.description, descriptor: recvDescriptor.description)
+        let changeBackup = Backup(keyId: changeId.description, descriptor: changeDescriptor.description)
+        let importData = KeychainImport(recv: recvBackup, change: changeBackup)
+        try KeyClient.live.importKeys(importData)
+        return ImportResponse(name: name,
+                              recvKeychainId: recvId.description,
+                              changeKeychainId: changeId.description,
+                              recvDescriptor: descriptorOne.description,
+                              changeDescriptor: descriptorTwo.description)
     } else {
         throw ImportBitcoinCoreError.invalidFormat
     }

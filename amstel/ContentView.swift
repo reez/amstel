@@ -16,6 +16,7 @@ struct ContentView: View {
     @State private var pendingFileURL: URL?
     @State private var isNamingWallet = false
     @State private var newWalletName = ""
+    @State private var isSupportedExtension: Bool = false
 
     var body: some View {
         NavigationSplitView {
@@ -47,7 +48,18 @@ struct ContentView: View {
                         Button("Import") {
                             if let url = pendingFileURL {
                                 do {
-                                    let importResponse = try importWalletFromTxtFile(from: url, withName: newWalletName)
+                                    let ext = url.pathExtension.lowercased()
+                                    var importResponse: ImportResponse
+                                    
+                                    switch ext {
+                                    case "txt":
+                                        importResponse = try importWalletFromTxtFile(from: url, withName: newWalletName)
+                                    case "json":
+                                        importResponse = try importFromBitcoinCoreJson(from: url, withName: newWalletName)
+                                    default:
+                                        isSupportedExtension = true
+                                        throw InvalidFileExtension.unsupported
+                                    }
                                     let _ = try Wallet(recvId: importResponse.recvKeychainId,
                                                        recv: importResponse.recvDescriptor,
                                                        change: importResponse.changeDescriptor)
@@ -76,6 +88,10 @@ struct ContentView: View {
                         Label("Add Item", systemImage: "plus")
                     }
                 }
+            }
+            .popover(isPresented: $isSupportedExtension) {
+                Text("File type unsupported")
+                    .padding()
             }
         } detail: {
             VStack(spacing: 4) {

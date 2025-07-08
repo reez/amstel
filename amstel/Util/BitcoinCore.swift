@@ -8,7 +8,7 @@
 import Foundation
 
 enum ImportBitcoinCoreError: Error {
-    case multipleDescriptorsNotSupported, tooManyDescriptors, notMultipath, invalidFormat
+    case multipleDescriptorsNotSupported, invalidFormat
 }
 
 struct DescriptorImport: Codable {
