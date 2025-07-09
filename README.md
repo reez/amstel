@@ -8,13 +8,7 @@ Managing Bitcoin should be simple and boring. The user interface of Amstel is in
 
 ## Build
 
-Application binaries are not distributed yet. Run this application on Signet:
-
-```
-git clone https://github.com/rustaceanrob/amstel.git
-```
-
-And open the project in XCode.
+Application binaries are not distributed yet. Currently, the repository is built on a fork of BDK FFI, and will be migrated to an official version of BDK Swift after BDK FFI 2.0.0 is released.
 
 ## Maintenance
 

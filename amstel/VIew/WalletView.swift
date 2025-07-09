@@ -90,6 +90,7 @@ struct WalletView: View {
                 }) {
                     Label("Create", systemImage: "document.badge.plus.fill")
                 }
+                .keyboardShortcut("n", modifiers: [.command])
                 .disabled(isInitialLoad || errorMessage != nil || isInitialSync)
                 Button(action: {
                     if let url = openPsbtFile() {
@@ -103,6 +104,7 @@ struct WalletView: View {
                 }) {
                     Label("Send", systemImage: "paperplane")
                 }
+                .keyboardShortcut("b", modifiers: [.command])
                 Button(action: {
                     do {
                         self.currentRevealed = try self.walletState.receive()
@@ -113,6 +115,7 @@ struct WalletView: View {
                 }) {
                     Label("Recieve", systemImage: "qrcode")
                 }
+                .keyboardShortcut("r", modifiers: [.command])
                 .disabled(isInitialLoad || errorMessage != nil || isInitialSync)
             }
         }

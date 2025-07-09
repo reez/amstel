@@ -93,6 +93,7 @@ struct ContentView: View {
                     Button(action: addItem) {
                         Label("Add Item", systemImage: "plus")
                     }
+                    .keyboardShortcut("i", modifiers: [.command])
                 }
                 ToolbarItem {
                     Button(action: { isShowingSettings = true }) {
