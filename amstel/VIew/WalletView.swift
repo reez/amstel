@@ -20,6 +20,7 @@ struct WalletView: View {
 
     @AppStorage("numConns") private var numConns: Int = 3
     @AppStorage("useProxy") private var useProxy: Bool = false
+    @AppStorage("sendNotif") private var notiesEnabled: Bool = false
 
     @State private var walletState: WalletState = UninitializedWallet()
     // UI
@@ -140,6 +141,12 @@ struct WalletView: View {
             self.progress = self.walletState.progress()
         }
         .onReceive(NotificationCenter.default.publisher(for: .walletDidUpdate)) { _ in
+            if notiesEnabled {
+                #if DEBUG
+                print("Sending notification")
+                #endif
+                sendWalletUpdatedBanner()
+            }
             self.isInitialSync = false
             self.firstSync = false
             self.blockHeight = self.walletState.height()

@@ -8,10 +8,12 @@
 import BitcoinDevKit
 import SwiftData
 import SwiftUI
+import UserNotifications
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [WalletItem]
+    @AppStorage("sendNotif") private var notiesEnabled: Bool = false
 
     @State private var pendingFileURL: URL?
     @State private var isNamingWallet = false
@@ -101,6 +103,18 @@ struct ContentView: View {
             .popover(isPresented: $isSupportedExtension) {
                 Text("File type unsupported")
                     .padding()
+            }
+            .onAppear {
+                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge]) { granted, error in
+                    if let error = error {
+                        #if DEBUG
+                        print("Permission error: \(error.localizedDescription)")
+                        #endif
+                    } else {
+                        notiesEnabled = true
+                    }
+                }
+
             }
         } detail: {
             VStack(spacing: 4) {
