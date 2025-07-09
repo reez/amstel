@@ -144,6 +144,11 @@ final class InitializedWallet: WalletState {
                         }
                     case let .newChainHeight(height):
                         self.currHeight = height
+                        // It is only possible to get a block header update if we are connected to a peer
+                        await MainActor.run {
+                            self.isConnected = true
+                            NotificationCenter.default.post(name: .progressDidUpdate, object: nil)
+                        }
                     case let .progress(progress):
                         await MainActor.run {
                             self.currProgress = progress

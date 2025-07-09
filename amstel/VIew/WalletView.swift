@@ -89,7 +89,7 @@ struct WalletView: View {
                 }) {
                     Label("Create", systemImage: "document.badge.plus.fill")
                 }
-                .disabled(isInitialLoad || errorMessage != nil)
+                .disabled(isInitialLoad || errorMessage != nil || isInitialSync)
                 Button(action: {
                     if let url = openPsbtFile() {
                         do {
