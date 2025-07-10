@@ -56,8 +56,10 @@ struct WalletView: View {
                 if isConnected {
                     Image(systemName: "network")
                         .foregroundStyle(.green)
+                        .help(NETWORK == .bitcoin ? "Connected to Bitcoin network" : "Connected to Bitcoin \(NETWORK) network")
                 } else {
                     Image(systemName: "network.slash")
+                        .help(NETWORK == .bitcoin ? "Disconnected from Bitcoinnetwork" : "Disconnected from Bitcoin \(NETWORK) network")
                 }
             }
             .padding()
@@ -92,6 +94,7 @@ struct WalletView: View {
                 }
                 .keyboardShortcut("n", modifiers: [.command])
                 .disabled(isInitialLoad || errorMessage != nil || isInitialSync)
+                .help("Create a transaction")
                 Button(action: {
                     if let url = openPsbtFile() {
                         do {
@@ -105,6 +108,7 @@ struct WalletView: View {
                     Label("Send", systemImage: "paperplane")
                 }
                 .keyboardShortcut("b", modifiers: [.command])
+                .help("Send a transaction")
                 Button(action: {
                     do {
                         self.currentRevealed = try self.walletState.receive()
@@ -117,6 +121,7 @@ struct WalletView: View {
                 }
                 .keyboardShortcut("r", modifiers: [.command])
                 .disabled(isInitialLoad || errorMessage != nil || isInitialSync)
+                .help("Generate a receive address")
             }
         }
         // User flow sheets
