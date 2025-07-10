@@ -10,6 +10,7 @@
 		AD8475652E1541D000F813DB /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = AD8475642E1541D000F813DB /* KeychainAccess */; };
 		AD8475682E1541E900F813DB /* BitcoinDevKit in Frameworks */ = {isa = PBXBuildFile; productRef = AD8475672E1541E900F813DB /* BitcoinDevKit */; };
 		AD8475802E157F6B00F813DB /* QRCode in Frameworks */ = {isa = PBXBuildFile; productRef = AD84757F2E157F6B00F813DB /* QRCode */; };
+		AE6500572E2048550072C0E9 /* BitcoinUI in Frameworks */ = {isa = PBXBuildFile; productRef = AE6500562E2048550072C0E9 /* BitcoinUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 				AD8475682E1541E900F813DB /* BitcoinDevKit in Frameworks */,
 				AD8475652E1541D000F813DB /* KeychainAccess in Frameworks */,
 				AD8475802E157F6B00F813DB /* QRCode in Frameworks */,
+				AE6500572E2048550072C0E9 /* BitcoinUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +139,7 @@
 				AD8475642E1541D000F813DB /* KeychainAccess */,
 				AD8475672E1541E900F813DB /* BitcoinDevKit */,
 				AD84757F2E157F6B00F813DB /* QRCode */,
+				AE6500562E2048550072C0E9 /* BitcoinUI */,
 			);
 			productName = amstel;
 			productReference = AD84752E2E153AC800F813DB /* amstel.app */;
@@ -224,6 +227,7 @@
 				AD8475632E1541D000F813DB /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				AD8475662E1541E900F813DB /* XCLocalSwiftPackageReference "../bdk-ffi/bdk-swift" */,
 				AD84757E2E157F6B00F813DB /* XCRemoteSwiftPackageReference "QRCode" */,
+				AE6500552E2048550072C0E9 /* XCRemoteSwiftPackageReference "BitcoinUI" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = AD84752F2E153AC800F813DB /* Products */;
@@ -612,6 +616,14 @@
 				minimumVersion = 26.10.0;
 			};
 		};
+		AE6500552E2048550072C0E9 /* XCRemoteSwiftPackageReference "BitcoinUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/reez/BitcoinUI";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -628,6 +640,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AD84757E2E157F6B00F813DB /* XCRemoteSwiftPackageReference "QRCode" */;
 			productName = QRCode;
+		};
+		AE6500562E2048550072C0E9 /* BitcoinUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AE6500552E2048550072C0E9 /* XCRemoteSwiftPackageReference "BitcoinUI" */;
+			productName = BitcoinUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

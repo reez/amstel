@@ -7,6 +7,7 @@
 
 import BitcoinDevKit
 import SwiftUI
+import BitcoinUI
 
 struct ConfirmRecipientView: View {
     @ObservedObject var viewModel: CreateTransactionViewModel

@@ -6,6 +6,7 @@
 //
 import QRCode
 import SwiftUI
+import BitcoinUI
 
 struct ReceiveView: View {
     @Binding var addressActual: ViewableAddress?
