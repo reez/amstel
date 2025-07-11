@@ -6,6 +6,7 @@
 //
 import BitcoinDevKit
 import SwiftUI
+import BitcoinUI
 
 struct ReviewView: View {
     @ObservedObject var viewModel: CreateTransactionViewModel

@@ -6,6 +6,7 @@
 //
 import BitcoinDevKit
 import SwiftUI
+import BitcoinUI
 
 struct SendView: View {
     var psbt: Psbt
