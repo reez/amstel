@@ -17,5 +17,5 @@ struct ViewableTransaction: Equatable, Identifiable, Hashable {
 struct TxMetadata: Equatable, Hashable {
     let txid: String
     let date: Date
-    let height: UInt32
+    let height: UInt32?
 }

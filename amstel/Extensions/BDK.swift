@@ -36,10 +36,10 @@ extension LocalOutput {
 extension CanonicalTx {
     func intoMetadata() -> TxMetadata {
         let txid = transaction.computeTxid().description
-        let (chainPos, time) = switch chainPosition {
+        let (chainPos, time): (UInt32?, Date) = switch chainPosition {
         case let .confirmed(confirmation_block_time, _):
             (confirmation_block_time.blockId.height, Date(timeIntervalSince1970: TimeInterval(confirmation_block_time.confirmationTime)))
-        case .unconfirmed: (UInt32(0), Date())
+        case .unconfirmed: (nil, Date())
         }
         return TxMetadata(txid: txid, date: time, height: chainPos)
     }

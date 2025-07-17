@@ -32,9 +32,15 @@ struct TransactionListView: View {
                 }
                 // Bottom
                 HStack {
-                    Text("Block \(tx.metadata.height)")
-                        .font(.caption2)
-                        .foregroundStyle(.secondary)
+                    if let height = tx.metadata.height {
+                        Text("Block \(height)")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    } else {
+                        Text("Unconfirmed")
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                    }
                     Spacer()
                     if let feeRate = tx.feeRate {
                         Text("\(feeRate) sat/vB")
@@ -50,6 +56,10 @@ struct TransactionListView: View {
 
 #Preview {
     @Previewable @State var transaction: [ViewableTransaction] = [
+        ViewableTransaction(netSend: true,
+                            amount: 322,
+                            feeRate: 1,
+                            metadata: TxMetadata(txid: "aaaabbbbccccddddeeeeffffaaaabbbbccccddddeeeeffff", date: Date(), height: nil)),
         ViewableTransaction(netSend: false,
                             amount: 4200,
                             feeRate: nil,

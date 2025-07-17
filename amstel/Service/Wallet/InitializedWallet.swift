@@ -12,6 +12,7 @@ final class InitializedWallet: WalletState {
     private let client: CbfClient
     private let node: CbfNode
     private let persister: Persister
+    private var pendingTxs: [String: BitcoinDevKit.Transaction]
     private var isConnected: Bool = false
     private var currProgress: Float = 0.0
     private var currHeight: UInt32 = 0
@@ -23,6 +24,7 @@ final class InitializedWallet: WalletState {
         self.client = client
         self.node = node
         self.persister = persister
+        self.pendingTxs = [:]
     }
 
     func balance() -> ViewableBalance { return wallet.balance().intoViewable() }
@@ -63,7 +65,11 @@ final class InitializedWallet: WalletState {
 
     func completeTx(builder: TxBuilder) throws -> Psbt { return try builder.finish(wallet: wallet) }
 
-    func broadcastTx(transction: Transaction) throws { try client.broadcast(transaction: transction) }
+    func broadcastTx(transction: Transaction) throws {
+        let wtxid = transction.computeWtxid().description
+        pendingTxs[wtxid] = transction
+        try client.broadcast(transaction: transction)
+    }
 
     func fees() async -> FeeRates? {
         let broadcastMin = try? await client.minBroadcastFeerate()
@@ -156,8 +162,13 @@ final class InitializedWallet: WalletState {
                         }
                     case let .txGossiped(wtxid: wtxid):
                         #if DEBUG
-                            print("\(wtxid)")
+                            print("Gossiped \(wtxid)")
                         #endif
+                        let pendingTx = pendingTxs.removeValue(forKey: wtxid)
+                        if let tx = pendingTx {
+                            wallet.applyUnconfirmedTxs(unconfirmedTxs: [UnconfirmedTx(tx: tx, lastSeen: UInt64(Date().timeIntervalSince1970))])
+                            pendingTxs[wtxid] = tx
+                        }
                         await MainActor.run {
                             NotificationCenter.default.post(name: .txDidSend, object: nil)
                         }
