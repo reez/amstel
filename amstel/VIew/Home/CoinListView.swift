@@ -10,6 +10,7 @@ import SwiftUI
 
 struct CoinListView: View {
     @Binding var coins: [Coin]
+    @State var selectedCoin: Coin?
 
     var body: some View {
         List(coins) { coin in
@@ -45,6 +46,13 @@ struct CoinListView: View {
                     }
                 }
             }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                selectedCoin = coin
+            }
+        }
+        .sheet(item: $selectedCoin) { coin in
+            CoinView(coinBinding: $selectedCoin, theCoin: coin)
         }
     }
 }
