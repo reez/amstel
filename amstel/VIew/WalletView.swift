@@ -221,7 +221,7 @@ struct WalletView: View {
             ScanType.sync
         }
         if !FileManager.default.fileExists(atPath: URL.nodeDirectoryPath().path()) {
-            try FileManager.default.createDirectory(at: URL.nodeDirectoryPath(), withIntermediateDirectories: false)
+            try FileManager.default.createDirectory(at: URL.nodeDirectoryPath(), withIntermediateDirectories: true)
         }
         let conns = UInt8(numConns)
         var builder = CbfBuilder()

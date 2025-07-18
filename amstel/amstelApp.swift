@@ -28,7 +28,6 @@ struct amstelApp: App {
             ContentView()
                 .navigationTitle("")
         }
-//        .windowStyle(.hiddenTitleBar)
         .modelContainer(sharedModelContainer)
     }
 }
