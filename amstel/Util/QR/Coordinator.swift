@@ -20,7 +20,8 @@ class QRScannerCoordinator: NSObject, AVCaptureMetadataOutputObjectsDelegate {
     private func setupSession() {
         guard let device = AVCaptureDevice.default(for: .video),
               let input = try? AVCaptureDeviceInput(device: device),
-              session.canAddInput(input) else {
+              session.canAddInput(input)
+        else {
             print("Failed to configure input")
             return
         }
@@ -38,9 +39,10 @@ class QRScannerCoordinator: NSObject, AVCaptureMetadataOutputObjectsDelegate {
         output.metadataObjectTypes = [.qr]
     }
 
-    func metadataOutput(_ output: AVCaptureMetadataOutput,
+    func metadataOutput(_: AVCaptureMetadataOutput,
                         didOutput metadataObjects: [AVMetadataObject],
-                        from connection: AVCaptureConnection) {
+                        from _: AVCaptureConnection)
+    {
         guard let object = metadataObjects.first as? AVMetadataMachineReadableCodeObject,
               object.type == .qr,
               let stringValue = object.stringValue else { return }

@@ -5,8 +5,8 @@
 //  Created by Robert Netzke on 7/7/25.
 //
 import BitcoinDevKit
-import SwiftUI
 import BitcoinUI
+import SwiftUI
 
 struct SendView: View {
     var psbt: Psbt

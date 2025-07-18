@@ -10,7 +10,7 @@ import SwiftUI
 struct QRScannerView: NSViewRepresentable {
     let coordinator: QRScannerCoordinator
 
-    func makeNSView(context: Context) -> NSView {
+    func makeNSView(context _: Context) -> NSView {
         let view = NSView()
         let previewLayer = coordinator.makePreviewLayer()
         previewLayer.frame = view.bounds
@@ -22,5 +22,5 @@ struct QRScannerView: NSViewRepresentable {
         return view
     }
 
-    func updateNSView(_ nsView: NSView, context: Context) {}
+    func updateNSView(_: NSView, context _: Context) {}
 }

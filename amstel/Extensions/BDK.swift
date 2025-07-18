@@ -71,13 +71,13 @@ extension URL {
         let application = appSupport.appendingPathComponent("Amstel")
         return application
     }
-    
+
     static func nodeDirectoryPath() -> URL {
         let base = URL.baseApplicationUrl()
         let nodeDir = base.appendingPathComponent(".node")
         return nodeDir
     }
-    
+
     static func walletDirectoryUrl(id: String) -> URL {
         let base = URL.baseApplicationUrl()
         let walletDir = base.appendingPathComponent(id)

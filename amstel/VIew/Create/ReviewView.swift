@@ -5,8 +5,8 @@
 //  Created by Robert Netzke on 7/5/25.
 //
 import BitcoinDevKit
-import SwiftUI
 import BitcoinUI
+import SwiftUI
 
 struct ReviewView: View {
     @ObservedObject var viewModel: CreateTransactionViewModel

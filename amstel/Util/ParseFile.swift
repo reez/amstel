@@ -5,10 +5,10 @@
 //  Created by Robert Netzke on 7/2/25.
 //
 import BitcoinDevKit
-import SwiftUICore
 import Foundation
-import UniformTypeIdentifiers
 import KeychainAccess
+import SwiftUICore
+import UniformTypeIdentifiers
 
 enum InvalidFileExtension: Error {
     case unsupported
@@ -62,7 +62,7 @@ func importFromBitcoinCoreJson(from url: URL, withName name: String) throws -> I
         var changeId: DescriptorId
         var recvDescriptor: Descriptor
         var changeDescriptor: Descriptor
-        
+
         if backs.count != 2 {
             throw ImportError.tooManyPaths
         }
@@ -124,7 +124,7 @@ enum ImportType: String, Identifiable, CaseIterable {
         case .bitcoinCore: "Bitcoin Core"
         }
     }
-    
+
     var fileDescription: String {
         switch self {
         case .txt: "A descriptor saved in a txt file"
@@ -138,7 +138,7 @@ enum ImportType: String, Identifiable, CaseIterable {
         case .bitcoinCore: Image(systemName: "bitcoinsign.circle.fill")
         }
     }
-    
+
     var importNamedWalletFromFile: (URL, String) throws -> ImportResponse {
         switch self {
         case .txt: importWalletFromTxtFile(from:withName:)
@@ -155,8 +155,7 @@ enum ImportType: String, Identifiable, CaseIterable {
 }
 
 struct ImportFile: Identifiable {
-    var id: UUID = UUID()
+    var id: UUID = .init()
     var url: URL
     var importType: ImportType
 }
-

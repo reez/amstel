@@ -9,7 +9,7 @@ import SwiftUI
 struct CoinView: View {
     @Binding var coinBinding: Coin?
     let theCoin: Coin
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("Coin Details")
@@ -44,7 +44,8 @@ struct CoinView: View {
         }
     }
 }
+
 #Preview {
-    @Previewable @State var coin: Coin? = Coin(index: 35, txid: "aaaaaabbbbbbccccccdddddd", script: "OP_0 OP_PUSHBYTES_20 AAAADDDDRRRREEEEQQQQ", date: Date(), sats: 120213, change: false)
+    @Previewable @State var coin: Coin? = Coin(index: 35, txid: "aaaaaabbbbbbccccccdddddd", script: "OP_0 OP_PUSHBYTES_20 AAAADDDDRRRREEEEQQQQ", date: Date(), sats: 120_213, change: false)
     CoinView(coinBinding: $coin, theCoin: coin!)
 }

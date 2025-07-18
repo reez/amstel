@@ -4,9 +4,9 @@
 //
 //  Created by Robert Netzke on 7/2/25.
 //
+import BitcoinUI
 import QRCode
 import SwiftUI
-import BitcoinUI
 
 struct ReceiveView: View {
     @Binding var addressActual: ViewableAddress?

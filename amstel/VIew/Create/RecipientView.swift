@@ -15,7 +15,7 @@ struct RecipientView: View {
     @Binding var isPresented: Bool
     @Binding var errorMessage: ErrorMessage?
     @State var scanningQr: Bool = false
-    
+
     @StateObject var scanViewModel = QRScanViewModel()
     @State private var coordinator: QRScannerCoordinator?
 
@@ -104,7 +104,7 @@ struct RecipientView: View {
             viewModel.recipient = addr
         }
     }
-    
+
     private func parseStringFromQr(_ result: String) throws {
         let scannedAddress = result.lowercased().replacingOccurrences(
             of: "bitcoin:",
