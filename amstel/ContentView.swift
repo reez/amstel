@@ -99,10 +99,10 @@ struct ContentView: View {
                     .padding()
             }
             .onAppear {
-                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge]) { granted, error in
+                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge]) { _, error in
                     if let error = error {
                         #if DEBUG
-                        print("Permission error: \(error.localizedDescription)")
+                            print("Permission error: \(error.localizedDescription)")
                         #endif
                     } else {
                         notiesEnabled = true

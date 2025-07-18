@@ -24,7 +24,7 @@ final class InitializedWallet: WalletState {
         self.client = client
         self.node = node
         self.persister = persister
-        self.pendingTxs = [:]
+        pendingTxs = [:]
     }
 
     func balance() -> ViewableBalance { return wallet.balance().intoViewable() }

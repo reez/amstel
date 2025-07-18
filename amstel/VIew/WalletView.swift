@@ -151,7 +151,7 @@ struct WalletView: View {
         .onReceive(NotificationCenter.default.publisher(for: .walletDidUpdate)) { _ in
             if notiesEnabled {
                 #if DEBUG
-                print("Sending notification")
+                    print("Sending notification")
                 #endif
                 sendWalletUpdatedBanner()
             }

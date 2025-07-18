@@ -20,7 +20,7 @@ func sendWalletUpdatedBanner() {
     UNUserNotificationCenter.current().add(request) { error in
         if let error = error {
             #if DEBUG
-            print("Failed to send notification: \(error.localizedDescription)")
+                print("Failed to send notification: \(error.localizedDescription)")
             #endif
         }
     }

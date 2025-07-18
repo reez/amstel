@@ -16,7 +16,7 @@ struct SettingsView: View {
             Section {
                 VStack(alignment: .leading) {
                     HStack {
-                        Stepper(value: $numConns, in: 1...10) {
+                        Stepper(value: $numConns, in: 1 ... 10) {
                             Text("")
                         }
                         .labelsHidden()
@@ -27,7 +27,6 @@ struct SettingsView: View {
                         Text("Route connections through a Tor proxy hosted at 127.0.0.1:9050")
                             .font(.footnote)
                             .foregroundStyle(.secondary)
-                        
                     }
                 }
             }
@@ -49,4 +48,3 @@ struct SettingsView: View {
     @Previewable @State var isPresented = true
     SettingsView(isPresented: $isPresented)
 }
-

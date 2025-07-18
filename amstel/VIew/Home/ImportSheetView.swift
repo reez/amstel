@@ -9,7 +9,7 @@ import SwiftUI
 struct ImportSheetView: View {
     @Binding var importFile: ImportFile?
     @Binding var isShowingImport: Bool
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("Choose Import")
@@ -44,7 +44,7 @@ struct ImportSheetView: View {
             }
         }
     }
-    
+
     private func addItem(importType: ImportType) {
         let panel = NSOpenPanel()
         panel.allowsMultipleSelection = false
@@ -58,4 +58,3 @@ struct ImportSheetView: View {
         }
     }
 }
-
