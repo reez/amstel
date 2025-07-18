@@ -21,18 +21,26 @@ struct ImportSheetView: View {
                 } label: {
                     HStack {
                         type.systemImage
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 40, height: 40)
                             .foregroundColor(.accentColor)
+                            .padding()
                         VStack(alignment: .leading) {
                             Text(type.label)
                                 .font(.headline)
                             Text(type.fileDescription)
                                 .font(.subheadline)
                                 .foregroundStyle(.secondary)
+                                .lineLimit(nil)
                         }
                     }
                     .padding()
                 }
                 .buttonStyle(PlainButtonStyle())
+                .contentShape(Rectangle())
+                .padding()
+                Divider()
             }
         }
         .padding()

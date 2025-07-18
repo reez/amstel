@@ -4,6 +4,7 @@
 //
 //  Created by Robert Netzke on 7/2/25.
 //
+import BitcoinUI
 import BitcoinDevKit
 import Foundation
 import KeychainAccess
@@ -113,14 +114,16 @@ private func importFromTwoPath(_ descriptors: [Descriptor], name: String) throws
 }
 
 enum ImportType: String, Identifiable, CaseIterable {
-    case txt
     case bitcoinCore
+    case coldcard
+    case txt
 
     var id: String { rawValue }
 
     var label: String {
         switch self {
         case .txt: "Generic"
+        case .coldcard: "ColdCard"
         case .bitcoinCore: "Bitcoin Core"
         }
     }
@@ -128,6 +131,7 @@ enum ImportType: String, Identifiable, CaseIterable {
     var fileDescription: String {
         switch self {
         case .txt: "A descriptor saved in a txt file"
+        case .coldcard: "'Advanced/Tools > Export Wallet > Descriptor' or 'Settings > Multisig Wallets'"
         case .bitcoinCore: "JSON in Bitcoin Core format"
         }
     }
@@ -135,6 +139,7 @@ enum ImportType: String, Identifiable, CaseIterable {
     var systemImage: Image {
         switch self {
         case .txt: Image(systemName: "doc.text")
+        case .coldcard: BitcoinUI.BitcoinImage(named: "coldcard")
         case .bitcoinCore: Image(systemName: "bitcoinsign.circle.fill")
         }
     }
@@ -142,6 +147,7 @@ enum ImportType: String, Identifiable, CaseIterable {
     var importNamedWalletFromFile: (URL, String) throws -> ImportResponse {
         switch self {
         case .txt: importWalletFromTxtFile(from:withName:)
+        case .coldcard: importWalletFromTxtFile(from:withName:)
         case .bitcoinCore: importFromBitcoinCoreJson(from:withName:)
         }
     }
@@ -149,6 +155,7 @@ enum ImportType: String, Identifiable, CaseIterable {
     var contentType: UTType {
         switch self {
         case .txt: .plainText
+        case .coldcard: .plainText
         case .bitcoinCore: .json
         }
     }
