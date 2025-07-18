@@ -108,7 +108,6 @@ struct ContentView: View {
                         notiesEnabled = true
                     }
                 }
-
             }
         } detail: {
             VStack(spacing: 4) {

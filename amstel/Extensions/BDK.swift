@@ -56,30 +56,39 @@ extension AddressInfo {
 
 extension String {
     static func walletDirectoryPath(id: String) -> String {
-        let documentsDir = URL.documentsDirectory
-        let walletDir = documentsDir.appendingPathComponent(id)
-        return walletDir.path()
+        return URL.walletDirectoryUrl(id: id).path()
     }
 
     static func walletSqliteFile(id: String) -> String {
-        let documentsDir = URL.documentsDirectory
-        let walletDir = documentsDir.appendingPathComponent(id)
+        let walletDir = URL.walletDirectoryUrl(id: id)
         return walletDir.appendingPathComponent("wallet.db").path()
     }
 }
 
 extension URL {
+    static func baseApplicationUrl() -> URL {
+        let appSupport = URL.libraryDirectory
+        let application = appSupport.appendingPathComponent("Amstel")
+        return application
+    }
+    
     static func nodeDirectoryPath() -> URL {
-        let documentsDir = URL.documentsDirectory
-        let nodeDir = documentsDir.appendingPathComponent(".node")
+        let base = URL.baseApplicationUrl()
+        let nodeDir = base.appendingPathComponent(".node")
         return nodeDir
+    }
+    
+    static func walletDirectoryUrl(id: String) -> URL {
+        let base = URL.baseApplicationUrl()
+        let walletDir = base.appendingPathComponent(id)
+        return walletDir
     }
 }
 
 extension Wallet {
     convenience init(recvId: String, recv: String, change: String) throws {
-        let docsDir = URL.documentsDirectory
-        try FileManager.default.createDirectory(at: docsDir.appendingPathComponent(recvId), withIntermediateDirectories: false)
+        let walletDir = URL.walletDirectoryUrl(id: recvId)
+        try FileManager.default.createDirectory(at: walletDir, withIntermediateDirectories: true)
         let recv = try Descriptor(descriptor: recv, network: NETWORK)
         let change = try Descriptor(descriptor: change, network: NETWORK)
         let conn = try Persister.newSqlite(path: String.walletSqliteFile(id: recvId))
