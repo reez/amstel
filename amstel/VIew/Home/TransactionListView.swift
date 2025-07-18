@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TransactionListView: View {
     @Binding var transactions: [ViewableTransaction]
+    @State var selectedTx: ViewableTransaction? = nil
 
     var body: some View {
         List(transactions) { tx in
@@ -50,6 +51,13 @@ struct TransactionListView: View {
                     }
                 }
             }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                selectedTx = tx
+            }
+        }
+        .sheet(item: $selectedTx) { tx in
+            TxDetailView(txBinding: $selectedTx, theTx: tx)
         }
     }
 }
