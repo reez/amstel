@@ -15,11 +15,11 @@ struct ContentView: View {
     @Query private var items: [WalletItem]
     @AppStorage("sendNotif") private var notiesEnabled: Bool = false
 
-    @State private var pendingFileURL: URL?
-    @State private var isNamingWallet = false
+    @State private var pendingImport: ImportFile?
     @State private var newWalletName = ""
-    @State private var isSupportedExtension: Bool = false
+    @State private var importDidError: Bool = false
     @State private var isShowingSettings: Bool = false
+    @State private var isShowingImport: Bool = false
 
     var body: some View {
         NavigationSplitView {
@@ -38,7 +38,7 @@ struct ContentView: View {
             .sheet(isPresented: $isShowingSettings) {
                 SettingsView(isPresented: $isShowingSettings)
             }
-            .sheet(isPresented: $isNamingWallet) {
+            .sheet(item: $pendingImport) { file in
                 VStack(spacing: 20) {
                     Text("Name your wallet")
                         .font(.headline)
@@ -48,39 +48,29 @@ struct ContentView: View {
 
                     HStack {
                         Button("Cancel") {
-                            isNamingWallet = false
-                            pendingFileURL = nil
+                            pendingImport = nil
+                            isShowingImport = false
                         }
                         Button("Import") {
-                            if let url = pendingFileURL {
-                                do {
-                                    let ext = url.pathExtension.lowercased()
-                                    var importResponse: ImportResponse
-                                    
-                                    switch ext {
-                                    case "txt":
-                                        importResponse = try importWalletFromTxtFile(from: url, withName: newWalletName)
-                                    case "json":
-                                        importResponse = try importFromBitcoinCoreJson(from: url, withName: newWalletName)
-                                    default:
-                                        isSupportedExtension = true
-                                        throw InvalidFileExtension.unsupported
-                                    }
-                                    let _ = try Wallet(recvId: importResponse.recvKeychainId,
-                                                       recv: importResponse.recvDescriptor,
-                                                       change: importResponse.changeDescriptor)
-                                    withAnimation {
-                                        let newWallet = WalletItem(recvPath: importResponse.recvKeychainId, changePath: importResponse.changeKeychainId, name: newWalletName)
-                                        modelContext.insert(newWallet)
-                                    }
-                                } catch let e {
-                                    #if DEBUG
-                                        print("\(e)")
-                                    #endif
+                            let url = file.url
+                            let importType = file.importType
+                            do {
+                                let importResponse = try importType.importNamedWalletFromFile(url, newWalletName)
+                                let _ = try Wallet(recvId: importResponse.recvKeychainId,
+                                                   recv: importResponse.recvDescriptor,
+                                                   change: importResponse.changeDescriptor)
+                                withAnimation {
+                                    let newWallet = WalletItem(recvPath: importResponse.recvKeychainId, changePath: importResponse.changeKeychainId, name: newWalletName)
+                                    modelContext.insert(newWallet)
                                 }
+                            } catch let e {
+                                importDidError = true
+                                #if DEBUG
+                                    print("\(e)")
+                                #endif
                             }
-                            isNamingWallet = false
-                            pendingFileURL = nil
+                            pendingImport = nil
+                            isShowingImport = false
                         }
                         .keyboardShortcut(.defaultAction)
                     }
@@ -88,9 +78,12 @@ struct ContentView: View {
                 .padding()
                 .frame(width: 350)
             }
+            .sheet(isPresented: $isShowingImport) {
+                ImportSheetView(importFile: $pendingImport, isShowingImport: $isShowingImport)
+            }
             .toolbar {
                 ToolbarItem {
-                    Button(action: addItem) {
+                    Button(action: { isShowingImport = true }) {
                         Label("Add Item", systemImage: "plus")
                     }
                     .keyboardShortcut("i", modifiers: [.command])
@@ -101,8 +94,8 @@ struct ContentView: View {
                     }
                 }
             }
-            .popover(isPresented: $isSupportedExtension) {
-                Text("File type unsupported")
+            .popover(isPresented: $importDidError) {
+                Text("There was an error importing your wallet")
                     .padding()
             }
             .onAppear {
@@ -120,24 +113,12 @@ struct ContentView: View {
         } detail: {
             VStack(spacing: 4) {
                 Text("No wallet selected")
+                    .padding()
                 if items.isEmpty {
-                    Text("Import a wallet with the top left toolbar. Accepted file types are txt and json.")
+                    Text("Import a wallet with the top left toolbar")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
                 }
-            }
-        }
-    }
-
-    private func addItem() {
-        let panel = NSOpenPanel()
-        panel.allowsMultipleSelection = false
-        panel.allowedContentTypes = [.text]
-        panel.canChooseDirectories = false
-        panel.begin {
-            response in
-            if response == .OK, let url = panel.url {
-                pendingFileURL = url
-                isNamingWallet = true
-                newWalletName = ""
             }
         }
     }
